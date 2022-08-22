@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msgpick.module.shops.mapper.ShopMapper">
+
+    <insert id="registerShop" parameterType="ShopRegisterRequest" useGeneratedKeys="true" keyProperty="shopId">
+        insert into shops
+        (partner_id, type, name, business_area, home_care_area, home_care_scale, how_to_come, zonecode, address,
+         address_detail, latitude, longitude,
+         contact, theme, scale, day_off, open_at, close_at, payment, introduce, notice, service_target,
+         etiquette, service_time, manner, hit, facilities, status)
+        values ( #{partnerId}, #{type}, #{name}, #{businessArea}, #{homeCareArea}, #{homeCareScale}, #{howToCome}
+               , #{zonecode}, #{address}, #{addressDetail}, #{latitude}, #{longitude}
+               , #{contact}, #{theme}, #{scale}, #{dayOff}, #{openAt}, #{closeAt}, #{payment}, #{introduce}, #{notice}
+               , #{serviceTarget}
+               , #{etiquette}, #{serviceTime}, #{manner}, 0, #{facilityData}, 'REVIEW')
+    </insert>
+
+    <select id="findByShopList" resultType="ShopDetailResponse">
+        select shop_id,
+               partner_id,
+               type,
+               name,
+               business_area,
+               home_care_area,
+               status,
+               how_to_come,
+               zonecode,
+               address,
+               address_detail,
+               latitude,
+               longitude,
+               contact,
+               open_at,
+               scale,
+               day_off,
+               theme,
+               close_at,
+               hit,
+               introduce,
+               notice,
+               service_target,
+               created_at,
+               updated_at,
+               service_time,
+               etiquette,
+               manner,
+               home_care_scale,
+               payment,
+               facilities as facilityData
+        from shops
+        where shop_id > 0
+          and deleted = false
+    </select>
+
+    <select id="findShop" resultType="ShopDetailResponse">
+        select shop_id,
+               partner_id,
+               type,
+               name,
+               business_area,
+               home_care_area,
+               home_care_scale,
+               how_to_come,
+               zonecode,
+               address,
+               address_detail,
+               latitude,
+               longitude,
+               contact,
+               theme,
+               scale,
+               day_off,
+               open_at,
+               close_at,
+               payment,
+               introduce,
+               notice,
+               service_target,
+               etiquette,
+               service_time,
+               manner,
+               status,
+               hit,
+               facilities as facilityData
+        from shops
+        where shop_id > 0
+          and deleted = false
+          and shop_id = #{shopId}
+    </select>
+
+    <select id="findByEntryStores" resultType="UnConfirmedShopsResponse">
+        select p.partner_id,
+               p.phone,
+               s.shop_id,
+               s.name,
+               s.type,
+               s.status,
+               s.business_area,
+               s.home_care_area,
+               s.created_at
+        from shops s,
+             partners p
+        where s.partner_id = p.partner_id
+          and s.deleted = false
+          and s.status != 'APPROVAL'
+    </select>
+
+    <select id="findByEntryStoreDetail" resultType="ShopDetailResponse">
+        select shop_id,
+               partner_id,
+               type,
+               name,
+               business_area,
+               home_care_area,
+               status,
+               how_to_come,
+               zonecode,
+               address,
+               address_detail,
+               latitude,
+               longitude,
+               contact,
+               open_at,
+               scale,
+               day_off,
+               theme,
+               close_at,
+               hit,
+               introduce,
+               notice,
+               service_target,
+               created_at,
+               updated_at,
+               service_time,
+               etiquette,
+               manner,
+               home_care_scale,
+               payment,
+               facilities as facilityData
+        from shops
+        where shop_id > 0
+          and deleted = false
+    </select>
+
+    <update id="saveReject">
+        update shops
+        set reject_message = #{rejectMessage},
+            status         = 'REJECT',
+            updated_at     = now()
+        where shop_id = #{shopId}
+    </update>
+
+    <update id="saveApproval">
+        update shops
+        set status         = 'APPROVAL',
+            reject_message = '',
+            updated_at     = now()
+        where shop_id = #{shopId}
+    </update>
+
+</mapper>

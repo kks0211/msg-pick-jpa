@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msgpick.module.programs.mapper.ProgramMapper">
+
+    <insert id="save" parameterType="java.util.List">
+        INSERT INTO programs(
+        shop_id,
+        name,
+        price,
+        discounted_price,
+        description
+        ) VALUES
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.shopId}
+            ,#{item.name}
+            ,#{item.price}
+            ,#{item.discountedPrice}
+            ,#{item.description}
+            )
+        </foreach>
+    </insert>
+
+    <select id="findByProgramList" resultType="ProgramDetailResponse">
+        select program_id,
+               shop_id,
+               name,
+               price,
+               discounted_price,
+               description,
+               created_at,
+               updated_at
+        from programs
+        where deleted = false
+          and shop_id = #{shopId}
+    </select>
+
+</mapper>

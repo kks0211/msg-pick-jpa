@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+<body>
+
+<div class="d-flex">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="mt-20 text-center">
+                    <a th:href="@{/}" class="d-inline-block">
+                        <img class="h-50px pb-5"
+                             src="https://ceo-cdn.baemin.com/cdn/ceo-square/src/images/logo/ceo@2x.png?ver=687b9189405c0e41587aaa0c235bce71"
+                             alt="배민사장님광장">
+                    </a>
+                    <h1 class="fs-2 fw-boldest">입점 신청이 거절되었습니다.</h1>
+                </div>
+
+                <div class="alert bg-light-success my-10">
+                    <div class="d-flex flex-column">
+                        <h4 class="mb-1 text-dark">운영자 코멘트</h4>
+                        <span th:text="${shopInfo.getRejectMessage()}"></span>
+                    </div>
+                </div>
+
+                <div th:replace="shops/modify-tab"></div>
+
+                <div class="my-10">
+                    <form id="shopModifyFormEl">
+                        <div class="row justify-content-center">
+                            <h2 class="fs-2 fw-boldest text-dark mb-5">샵 기본정보</h2>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4">샵 유형</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="type"
+                                            name="type"
+                                            aria-label="type"
+                                            required>
+                                        <option value="" disabled selected>샵 유형 선택</option>
+                                        <th:block th:each="type : ${types}">
+                                            <option th:value="${type}" th:text="${type.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.type == type : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="name">상호명</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           id="name"
+                                           name="name"
+                                           type="text"
+                                           placeholder="마사지픽"
+                                           maxlength="10"
+                                           th:value="${shopInfo != null ? shopInfo.getName() : ''}"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="businessArea">핵심상권</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="businessArea"
+                                           name="businessArea"
+                                           placeholder="핵심 상권 또는 핵심 지하철을 입력해주세요. ex) 종로, 잠실역"
+                                           maxlength="10"
+                                           th:value="${shopInfo != null ? shopInfo.getBusinessArea() : ''}"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="alert bg-light-success d-flex flex-column flex-sm-row p-5">
+                                    <div class="d-flex flex-column pe-0 pe-sm-10">
+                                        손님들에게 상호명과 핵심상권을 합쳐서 보여줘요. 손님들이 기억하기 쉽게 입력해주세요.<br>
+                                        예시) <span id="preview"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="howToCome">오는길</label>
+                                    <input class="required mb-1 form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="howToCome"
+                                           name="howToCome"
+                                           placeholder="오는 방법을 간단하게 입력해주세요 ex) 강남역 10번출구 100미터"
+                                           maxlength="10"
+                                           th:value="${shopInfo != null ? shopInfo.getHowToCome() : ''}"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5" style="display: none;">
+                                    <label class="required form-label text-dark fs-4" for="homeCareArea">홈케어 가능지역</label>
+                                    <input class="required mb-1 form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="homeCareArea"
+                                           name="homeCareArea"
+                                           placeholder="홈케어 가능직엽을 입력해주세요 ex) 잠실, 강남"
+                                           th:value="${shopInfo != null ? shopInfo.getHomeCareArea() : ''}"
+                                           maxlength="10">
+                                </div>
+                            </div>
+
+                            <div class="col-12" style="display: none;">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="zonecode">우편번호</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="zonecode"
+                                           name="zonecode"
+                                           th:value="${shopInfo != null ? shopInfo.getZonecode() : ''}"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="address">주소</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="address"
+                                           name="address"
+                                           placeholder="주소를 입력해주세요"
+                                           th:value="${shopInfo != null ? shopInfo.getAddress() : ''}"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="col-12" id="addressDetailArea" style="display: none;">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="form-label text-dark fs-4" for="addressDetail">상세주소</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="addressDetail"
+                                           name="addressDetail"
+                                           placeholder="상세 주소를 입력해주세요"
+                                           maxlength="20"
+                                           th:value="${shopInfo != null ? shopInfo.getAddressDetail() : ''}"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="contact">연락처</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           type="number"
+                                           id="contact"
+                                           name="contact"
+                                           placeholder="'-' 없이 숫자만 입력해주세요"
+                                           maxlength="11"
+                                           th:value="${shopInfo != null ? shopInfo.getContact() : ''}"
+                                           required>
+                                </div>
+                            </div>
+                            <!-- 기본정보 END -->
+
+                            <div class="separator my-10"></div>
+
+                            <!-- 테마 START -->
+                            <h2 class="fs-2 fw-boldest text-dark mb-5">테마</h2>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="theme">샵 테마</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="theme"
+                                            name="theme"
+                                            aria-label="theme"
+                                            required>
+                                        <option value="" disabled selected>샵 테마 선택</option>
+                                        <th:block th:each="theme : ${themes}">
+                                            <option th:value="${theme}" th:text="${theme.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.theme == theme : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 일반 샵 규모 -->
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="scale">샵 규모</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="scale"
+                                            name="scale"
+                                            aria-label="scale"
+                                            required>
+                                        <option value="" disabled selected>샵 규모 선택</option>
+                                        <th:block th:each="scale : ${scales}">
+                                            <option th:value="${scale}" th:text="${scale.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.scale == scale : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 홈케어 샵 규모 -->
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5" style="display: none;">
+                                    <label class="required form-label text-dark fs-4" for="homeCareScale">샵 규모</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="homeCareScale"
+                                            name="homeCareScale"
+                                            aria-label="homeCareScale">
+                                        <option value="" disabled selected>샵 규모 선택</option>
+                                        <th:block th:each="scale : ${homeCareScales}">
+                                            <option th:value="${scale}" th:text="${scale.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.homeCareScale == scale : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- 테마 END -->
+
+                            <div class="separator my-10"></div>
+
+                            <!-- 영업정보 START -->
+                            <h2 class="fs-2 fw-boldest text-dark mb-5">영업정보</h2>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="dayOff">휴일</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="dayOff"
+                                            name="dayOff"
+                                            aria-label="dayOff"
+                                            required>
+                                        <option value="" disabled selected>휴일 선택</option>
+                                        <th:block th:each="dayOff : ${dayOffs}">
+                                            <option th:value="${dayOff}"
+                                                    th:text="${dayOff.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.dayOff == dayOff : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="openAt">오픈시간</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="openAt"
+                                           name="openAt"
+                                           placeholder="오픈시간"
+                                           th:value="${shopInfo != null ? shopInfo.getOpenAt() : ''}"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="closeAt">마감시간</label>
+                                    <input class="form-control form-control-lg form-control-solid"
+                                           type="text"
+                                           id="closeAt"
+                                           name="closeAt"
+                                           aria-describedby="closeAtHelp"
+                                           placeholder="마감시간"
+                                           th:value="${shopInfo != null ? shopInfo.getCloseAt() : ''}"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="alert bg-light-success d-flex flex-column flex-sm-row p-5">
+                                    <div class="d-flex flex-column pe-0 pe-sm-10">
+                                        <span>* 마감시간이 24시 ~ 12시 사이인 경우, 사용자에게 마감시간 앞에 '다음날'이 추가로 표기됩니다. 예) 다음날 새벽 3시</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="payment">결제방법</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="payment"
+                                            name="payment"
+                                            aria-label="payment"
+                                            required>
+                                        <option value="" disabled selected>결제방법 선택</option>
+                                        <th:block th:each="payment : ${payments}">
+                                            <option th:value="${payment}"
+                                                    th:text="${payment.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.payment == payment : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- 영업정보 END -->
+
+                            <div class="separator my-10"></div>
+
+                            <!-- 운영정보 START -->
+                            <h2 class="fs-2 fw-boldest text-dark mb-5">운영정보</h2>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="introduce">샵 소개</label>
+                                    <textarea class="mb-1 form-control form-control-lg form-control-solid"
+                                              id="introduce"
+                                              name="introduce"
+                                              rows="5"
+                                              placeholder="샵을 소개해주세요"
+                                              data-kt-autosize="true"
+                                              maxlength="200"
+                                              th:value="${shopInfo != null ? shopInfo.getIntroduce() : ''}"
+                                              th:text="${shopInfo != null ? shopInfo.getIntroduce() : ''}"
+                                              required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="notice">공지사항</label>
+                                    <textarea class="mb-1 form-control form-control-lg form-control-solid"
+                                              rows="5"
+                                              id="notice"
+                                              name="notice"
+                                              placeholder="공지사항을 입력해주세요"
+                                              data-kt-autosize="true"
+                                              maxlength="200"
+                                              th:value="${shopInfo != null ? shopInfo.getNotice() : ''}"
+                                              th:text="${shopInfo != null ? shopInfo.getNotice() : ''}"
+                                              required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="serviceTarget">서비스 대상</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="serviceTarget"
+                                            name="serviceTarget"
+                                            aria-label="serviceTarget"
+                                            required>
+                                        <option value="" disabled selected>서비스 대상 선택</option>
+                                        <th:block th:each="serviceTarget : ${serviceTargets}">
+                                            <option th:value="${serviceTarget}"
+                                                    th:text="${serviceTarget.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.serviceTarget == serviceTarget : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="etiquette">예약 에티켓</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="etiquette"
+                                            name="etiquette"
+                                            aria-label="etiquette"
+                                            required>
+                                        <option value="" disabled selected>예약 에티켓 선택</option>
+                                        <th:block th:each="etiquette : ${etiquetteList}">
+                                            <option th:value="${etiquette}"
+                                                    th:text="${etiquette.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.etiquette == etiquette : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="serviceTime">서비스 시간</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="serviceTime"
+                                            name="serviceTime"
+                                            aria-label="serviceTime"
+                                            required>
+                                        <option value="" disabled selected>서비스 시간 선택</option>
+                                        <th:block th:each="serviceTime : ${serviceTimes}">
+                                            <option th:value="${serviceTime}"
+                                                    th:text="${serviceTime.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.serviceTime == serviceTime : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="manner">매너 규정</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="manner"
+                                            name="manner"
+                                            aria-label="manner"
+                                            required>
+                                        <option value="" disabled selected>매너 규정 선택</option>
+                                        <th:block th:each="manner : ${manners}">
+                                            <option th:value="${manner}"
+                                                    th:text="${manner.description}"
+                                                    th:selected="${shopInfo != null ? shopInfo.manner == manner : false}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required d-block form-label text-dark fs-4">제공 서비스</label>
+                                    <div class="d-flex">
+                                        <div class="form-check form-check-custom form-check-solid me-3"
+                                             th:each="facility, index : ${facilities}">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   name="facilities"
+                                                   th:value="${facility}"
+                                                   th:id="${'facility_' + facility}"
+                                                   th:checked="${shopInfo != null ? #lists.contains(shopInfo.facilities, facility) : false}"
+                                                   required>
+                                            <label class="form-check-label" th:for="${'facility_' + facility}"
+                                                   th:text="${facility.description}"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 운영정보 END -->
+
+                            <!-- 가게 사진 정보 START -->
+                            <!--<h2 class="fs-2 fw-boldest text-dark mb-5">샵 사진</h2>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <div class="fv-row">
+                                        &lt;!&ndash;begin::Dropzone&ndash;&gt;
+                                        <div class="dropzone" id="shopImageDropzone">
+                                            &lt;!&ndash;begin::Message&ndash;&gt;
+                                            <div class="dz-message needsclick">
+                                                &lt;!&ndash;begin::Icon&ndash;&gt;
+                                                <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
+                                                &lt;!&ndash;end::Icon&ndash;&gt;
+
+                                                &lt;!&ndash;begin::Info&ndash;&gt;
+                                                <div class="ms-4">
+                                                    <h3 class="fs-5 fw-bolder text-gray-900 mb-1">샵을 소개할 사진을 업로드해주세요 :)</h3>
+                                                    <span class="fs-7 fw-bold text-gray-400">최대 5장까지 업로드 할 수 있어요.</span>
+                                                </div>
+                                                &lt;!&ndash;end::Info&ndash;&gt;
+                                            </div>
+                                        </div>
+                                        &lt;!&ndash;end::Dropzone&ndash;&gt;
+                                    </div>
+                                    &lt;!&ndash;end::Input group&ndash;&gt;
+
+                                </div>
+                            </div>-->
+                            <!-- 가게 사진 정보 END -->
+
+                            <div class="col-12 my-5 text-end">
+                                <a type="button" class="btn btn-lg btn-white fw-boldest fs-6" th:href="@{/shops/modify}">
+                                    <span class="indicator-label">취소</span>
+                                </a>
+                                <a type="button" class="btn btn-lg btn-primary fw-boldest fs-6" id="shopModifyButton">
+                                    <span class="indicator-label">수정</span>
+                                    <span class="indicator-progress">수정중..</span>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script th:inline="javascript">
+    window.ShopModify.init();
+</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<> 2022-05-03T221817.404.json
+
+
+
+###
+POST http://localhost:8080/api/v1/therapists/register
+Content-Type: application/json
+Cookie: JSESSIONID=8A451991DF9C2F868CB82628F26E41B5
+
+{}
+
+###
+POST http://localhost:8080/api/v1/shops/register
+Content-Type: application/json
+Cookie: JSESSIONID=8A451991DF9C2F868CB82628F26E41B5
+
+{
+  "type": "SHOP",
+  "name": "test",
+  "businessArea": "test",
+  "howToCome": "test",
+  "homeCareArea": "",
+  "zonecode": "test",
+  "address": "test",
+  "addressDetail": "test",
+  "contact": "test",
+  "theme": "AROMA",
+  "scale": "",
+  "businessNumber": "111",
+  "homeCareScale": "",
+  "dayOff": "SAT_SUN",
+  "openAt": "1000",
+  "closeAt": "2200",
+  "payment": "PRE_CASH",
+  "introduce": "test",
+  "notice": "test",
+  "serviceTarget": "MALE_ONLY",
+  "etiquette": "CANCEL_10M",
+  "serviceTime": "DEFAULT",
+  "manner": "CASE1",
+  "facilities": [
+    "NON_STOP",
+    "PARKING",
+    "WIFI"
+  ],
+  "latitude": 11,
+  "longitude": 33
+}
+
+
+
+###
+POST http://localhost:8080/api/v1/shops/register
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="imgFile"; filename="avatar_profile.png"
+Content-Type: image/png
+
+< /Users/kwanseokkim/Downloads/img_files/avatar_profile.png
+
+--WebAppBoundary
+Content-Disposition: form-data; name="imgFile"; filename="promo_npay_200108.png"
+Content-Type: image/png
+
+< /Users/kwanseokkim/Downloads/img_files/promo_npay_200108.png
+
+--WebAppBoundary--
+
+type=SHOP&businessArea=test&howToCome=test&homeCareArea=&zonecode=test
+
+
+###
+POST http://localhost:8080/api/v1/programs/register
+Content-Type: application/json
+Cookie: JSESSIONID=357E942A48D64D00128C8AC8B6FF5F4C
+
+[
+    {
+      "name": "홍길동",
+      "price": 10,
+      "discountedPrice": 5,
+      "description": "테스트"
+    },
+    {
+      "name": "김아아",
+      "price": 20,
+      "discountedPrice": 3,
+      "description": "테스트123"
+    }
+]
+
+
+
+###
+POST http://localhost:8080/api/v1/therapists/register
+Content-Type: application/json
+Cookie: JSESSIONID=357E942A48D64D00128C8AC8B6FF5F4C
+
+[
+    {
+      "position": "중수",
+      "name": "길길길",
+      "nationality": "",
+      "description": ""
+    },
+    {
+      "position": "",
+      "name": "",
+      "nationality": "KOREA",
+      "description": "등록테스트123"
+    }
+]
+
+
+
+
+###
+POST http://localhost:8080/api/v1/admin/register
+Content-Type: application/json
+
+{
+  "adminAccount" : "test1",
+  "password" : "1",
+  "role": "OWNER"
+}
+
+
+###
+POST http://localhost:8080/auth/sign-in
+Content-Type: application/x-www-form-urlencoded
+
+adminAccount=admin&password=1
+
+
+###
+GET http://localhost:8080/shops
+Cookie: JSESSIONID=2BBDF51DCB7A12D2548312EA05BD4C64
+
+
+
+
+
+###
+GET http://localhost:8080/shops
+
+###
+GET http://localhost:8080/partners
+
+###
+GET http://localhost:8080/shops/28
+
+###
+GET http://localhost:8080/partners/1
+
+
+###
+GET http://localhost:8080/shops/entry-store-confirmed
+
+
+###
+PUT http://localhost:8080/api/v1/shops/7
+Content-Type: application/json
+Cookie: JSESSIONID=6E2324BE0A3C2B8E338964A6B3BD767A
+
+{
+  "shopId" : "22",
+  "type": "SHOP",
+  "name": "test",
+  "businessArea": "test4",
+  "howToCome": "test4",
+  "homeCareArea": "33333",
+  "zonecode": "test",
+  "address": "경기도 하남시 스타필드",
+  "addressDetail": "1층",
+  "contact": "test",
+  "theme": "AROMA",
+  "scale": "TWO_PERSON",
+  "businessNumber": "111",
+  "homeCareScale": "TWO_PERSON",
+  "dayOff": "SAT_SUN",
+  "openAt": "1000",
+  "closeAt": "2200",
+  "payment": "PRE_CASH",
+  "introduce": "test",
+  "notice": "test",
+  "serviceTarget": "MALE_ONLY",
+  "etiquette": "CANCEL_10M",
+  "serviceTime": "DEFAULT",
+  "manner": "CASE2",
+  "facilities": [
+    "NON_STOP",
+    "WIFI"
+  ],
+  "latitude": 11,
+  "longitude": 33
+}
+
+
+###
+PUT http://localhost:8080/api/v1/programs/
+Content-Type: application/json
+
+{
+  "shopId" : "19",
+    "name": "추가추2가추가",
+    "price": 20,
+    "discountedPrice": 10,
+    "description": "테스트2추가"
+}
+
+###
+PATCH http://localhost:8080/api/v1/programs/20
+
+
+###
+PUT http://localhost:8080/api/v1/therapists/update
+Content-Type: application/json
+
+  {
+    "shopId" : "19",
+    "position": "중수",
+    "name": "길길길",
+    "nationality": "KOREA",
+    "description": "손맛이 좋습니다."
+  }
+
+###
+PUT http://localhost:8080/api/v1/therapists/update
+Content-Type: application/json
+
+{
+"shopId" : "19",
+  "therapistId" : "20",
+"position": "중수",
+"name": "길길길",
+"nationality": "KOREA",
+"description": "손맛이 나빠졌습니다."
+}
+
+###
+PUT http://localhost:8080/api/v1/therapists/delete
+Content-Type: application/json
+
+{
+  "shopId" : "19",
+  "therapistId" : "20"
+
+}
+
+
+###
+PATCH http://localhost:8080/api/v1/shops/reject/
+Content-Type: application/json
+
+{
+
+}
+
+
+###
+PATCH http://localhost:8080/api/v1/shops/approval/26
+

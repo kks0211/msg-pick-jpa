@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+<body>
+
+<div class="h-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="text-center">
+                    <a th:href="@{/}" class="d-inline-block">
+                        <img class="h-50px pb-5"
+                             src="https://ceo-cdn.baemin.com/cdn/ceo-square/src/images/logo/ceo@2x.png?ver=687b9189405c0e41587aaa0c235bce71"
+                             alt="배민사장님광장">
+                    </a>
+                    <h1 class="fs-1 mb-10 fw-boldest">마사지픽 파트너스 회원가입</h1>
+                </div>
+
+                <form id="signUpForm">
+                    <div class="row">
+                        <!-- 휴대폰 -->
+                        <div class="col-12">
+                            <div class="form-wrapper form-control-flush mb-5">
+                                <label class="form-label fw-boldest text-dark fs-6" for="phone">휴대폰번호</label>
+                                <div class="position-relative">
+                                    <input type="number" class="form-control form-control-lg" maxlength="11" placeholder="'-' 없이 숫자만 입력해주세요" id="phone" name="phone" required>
+                                    <div class="position-absolute translate-middle-y top-50 end-0 me-3">
+                                        <button type="button" class="btn btn-sm btn-light" id="requestPhoneAuthCodeButton">
+                                            <span class="indicator-label">인증번호요청</span>
+                                            <span class="indicator-progress">인증번호요청<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 휴대폰 -->
+
+                        <!-- 휴대폰 인증번호 -->
+                        <div class="col-12" id="phoneAuthCodeArea" style="display: none;">
+                            <div class="form-wrapper form-control-flush mb-5">
+                                <label class="form-label fw-boldest text-dark fs-6" for="phoneAuthCode">인증번호</label>
+                                <div class="position-relative">
+                                    <input type="text" class="form-control form-control-lg" placeholder="휴대폰으로 전송된 인증코드를 입력해주세요" maxlength="4" id="phoneAuthCode" name="phoneAuthCode" required>
+                                    <div class="position-absolute translate-middle-y top-50 end-0 me-3">
+                                        <button type="button" class="btn btn-sm btn-light" id="verifyPhoneAuthCodeButton">
+                                            <span class="indicator-label">인증번호확인</span>
+                                            <span class="indicator-progress">인증번호확인<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 휴대폰 인증번호 -->
+
+                        <!-- 비밀번호 -->
+                        <div class="col-12">
+                            <div class="form-wrapper form-control-flush mb-5">
+                                <label class="form-label fw-boldest text-dark fs-6" for="password">비밀번호</label>
+                                <input class="mb-1 form-control form-control-lg" id="password" name="password" type="password"
+                                       placeholder="********" required>
+                            </div>
+                        </div>
+                        <!-- 비밀번호 -->
+
+                        <!-- 비밀번호 확인 -->
+                        <div class="col-12">
+                            <div class="form-wrapper form-control-flush mb-5">
+                                <label class="form-label fw-boldest text-dark fs-6" for="passwordConfirm">비밀번호 확인</label>
+                                <input class="mb-1 form-control form-control-lg" id="passwordConfirm" name="passwordConfirm"
+                                       type="password" placeholder="********" required>
+                            </div>
+                        </div>
+                        <!-- 비밀번호 확인 -->
+
+                        <!-- 이메일 -->
+                        <div class="col-12">
+                            <div class="form-wrapper form-control-flush mb-5">
+                                <label class="form-label fw-boldest text-dark fs-6" for="email">이메일</label>
+                                <input class="mb-1 form-control form-control-lg" id="email" name="email" type="email"
+                                       placeholder="example@naver.com" required>
+                            </div>
+                        </div>
+                        <!-- 이메일 -->
+
+                        <div class="col-12 my-5">
+                            <button type="button" class="btn btn-lg btn-danger fw-boldest fs-6 w-100"
+                                    id="signUpButton">
+                                <span class="indicator-label">
+                                    동의하고 회원가입
+                                </span>
+                                <span class="indicator-progress">
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span> 동의하고 회원가입
+                                </span>
+                            </button>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <span class="fw-bold text-gray-700 fs-6">
+                                <a href="#">이용약관</a>, <a href="#">개인정보 수집 및 이용</a>, <a href="#">개인정보 제공 내용</a>을 확인하였고 동의합니다.
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script>
+    window.Register.init();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+rootProject.name = 'msg-pick'
+
+include 'msg-pick-core'
+include 'msg-pick-partner'
+include 'msg-pick-admin'

@@ -1,0 +1,35 @@
+{
+  "name": "msg-pick-partner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npx parcel watch src/main/resources/src/main.js",
+    "build-assets": "npx parcel build src/main/resources/src/main.js",
+    "build": "npm run build-assets && ./gradlew clean build",
+    "dev": "concurrently -k \"npm run watch\" \"./gradlew bootRun\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "targets": {
+    "main": false,
+    "default": {
+      "distDir": "./src/main/resources/static/assets",
+      "publicUrl": "/assets"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@sb-github.com:sinsa-bridge/msg-pick-partner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "parcel": "^2.5.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "axios": "0.24.0"
+  }
+}

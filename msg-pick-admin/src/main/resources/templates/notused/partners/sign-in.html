@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+<body>
+
+<div class="h-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="text-center">
+                    <a th:href="@{/}" class="d-inline-block">
+                        <img class="h-50px pb-5"
+                             src="https://ceo-cdn.baemin.com/cdn/ceo-square/src/images/logo/ceo@2x.png?ver=687b9189405c0e41587aaa0c235bce71"
+                             alt="배민사장님광장">
+                    </a>
+                    <h1 class="fs-1 mb-10 fw-boldest">마사지픽 파트너스 로그인</h1>
+                </div>
+
+                <form id="signInform">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-wrapper form-control-flush mb-5">
+                                <label class="form-label fw-boldest text-dark fs-6" for="phone">휴대폰</label>
+                                <input class="mb-1 form-control form-control-lg" id="phone" name="phone" type="number" placeholder="01012345678" required>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-wrapper form-control-flush mb-5">
+                                <label class="form-label fw-boldest text-dark fs-6" for="password">비밀번호</label>
+                                <input class="mb-1 form-control form-control-lg" id="password" name="password" type="password" placeholder="********" required>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between">
+                                <a class="text-gray-700 text-start" th:href="@{/}">아이디 · 비밀번호 찾기</a>
+                                <a class="text-gray-700 text-end" th:href="@{/auth/sign-up}">회원가입</a>
+                            </div>
+                        </div>
+
+                        <div class="col-12 my-5">
+                            <button type="button" class="btn btn-lg btn-danger fw-boldest fs-6 w-100"
+                                    id="signInButton">
+                                    <span class="indicator-label">
+                                        로그인
+                                    </span>
+                                <span class="indicator-progress">
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span> 로그인
+                                    </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script>
+    window.SignIn.init();
+</script>
+</body>
+</html>

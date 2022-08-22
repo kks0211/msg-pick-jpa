@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="my-10">
+                <!-- 입점신청 단계 -->
+                <div th:replace="fragments/enter-steps"></div>
+
+                <div class="mb-10 text-left">
+                    <p class="fs-3 fw-bold">마사지 프로그램 정보를 입력해주세요.</p>
+                </div>
+
+                <div class="justify-content-center">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h2 class="fs-2 fw-boldest text-dark">프로그램 정보</h2>
+                        <button type="button" class="btn btn-sm btn-primary fs-6" id="showRegisterFormButton">
+                            추가
+                        </button>
+                    </div>
+
+                    <form id="programRegisterForm" class="mt-5 border border-gray-200 p-5" style="display: none;">
+                        <div class="row">
+                            <input class="mb-1 form-control form-control-lg form-control-solid" id="index" hidden>
+                            <div class="col-12 col-md-6">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="name">서비스 이름</label>
+                                    <input class="mb-1 form-control form-control-lg form-control-solid"
+                                           id="name"
+                                           name="name"
+                                           type="text"
+                                           placeholder="프로그램 명을 입력해주세요"
+                                           required
+                                           maxlength="15">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="price">가격</label>
+                                    <input class="mb-1 form-control form-control-lg form-control-solid"
+                                           id="price"
+                                           name="price"
+                                           type="text"
+                                           placeholder="가격을 입력해주세요"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="description">설명</label>
+                                    <textarea class="mb-1 form-control form-control-lg form-control-solid"
+                                              id="description"
+                                              name="description"
+                                              placeholder="프로그램을 설명해주세요" rows="2" data-kt-autosize="true"
+                                              maxlength="50"
+                                              required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 my-5 d-flex justify-content-center gap-2">
+                                <button type="button" class="btn btn-sm btn-light fs-6"
+                                        id="cancelButton">
+                                    취소
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary"
+                                        id="modifyButton">
+                                    수정
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary fs-6"
+                                        id="addButton">
+                                    추가
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- 입력한 프로그램 목록 -->
+                    <div id="programs" class="py-5"></div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a class="w-100 btn btn-light" id="prevButton">이전</a>
+                    <a class="w-100 btn btn-primary" id="nextButton">
+                        <span class="indicator-label">
+                            다음
+                        </span>
+                        <span class="indicator-progress">
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span> 다음
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script th:inline="javascript">
+    const sessionPrograms = [[${sessionPrograms}]];
+    console.log("sessionPrograms", sessionPrograms)
+
+    if (sessionPrograms != null) {
+        window.ProgramRegister.setPrograms(sessionPrograms);
+    }
+
+    window.ProgramRegister.init();
+</script>
+</body>
+</html>

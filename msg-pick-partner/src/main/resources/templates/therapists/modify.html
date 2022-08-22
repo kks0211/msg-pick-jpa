@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+<body>
+
+<div class="d-flex">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="mt-20 text-center">
+                    <a th:href="@{/}" class="d-inline-block">
+                        <img class="h-50px pb-5"
+                             src="https://ceo-cdn.baemin.com/cdn/ceo-square/src/images/logo/ceo@2x.png?ver=687b9189405c0e41587aaa0c235bce71"
+                             alt="배민사장님광장">
+                    </a>
+                    <h1 class="fs-2 fw-boldest">입점 신청이 거절되었습니다.</h1>
+                </div>
+
+                <div class="alert bg-light-success my-10">
+                    <div class="d-flex flex-column">
+                        <h4 class="mb-1 text-dark">운영자 코멘트</h4>
+                        <span th:text="${shopInfo.getRejectMessage()}"></span>
+                    </div>
+                </div>
+
+                <div th:replace="shops/modify-tab"></div>
+
+                <div class="my-10">
+                    <div class="row justify-content-center">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h2 class="fs-2 fw-boldest text-dark">관리사 정보</h2>
+                            <button type="button" class="btn btn-sm btn-primary fs-6" id="showTherapistFormButton">
+                                추가
+                            </button>
+                        </div>
+
+                        <form id="therapistForm" class="mt-5 border border-gray-200 p-5" style="display: none;">
+                            <div class="row">
+                                <input class="mb-1 form-control form-control-lg form-control-solid" id="index" hidden>
+                                <input class="mb-1 form-control form-control-lg form-control-solid" id="therapistId" hidden>
+                                <div class="col-12 col-md-4">
+                                    <div class="col-12">
+                                        <div class="form-wrapper form-control-flush mb-5">
+                                            <label class="required form-label text-dark fs-4" for="name">이름</label>
+                                            <input class="mb-1 form-control form-control-lg form-control-solid"
+                                                   id="name"
+                                                   name="name"
+                                                   type="text"
+                                                   placeholder="이름을 입력해주세요"
+                                                   required
+                                                   maxlength="15">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <div class="form-wrapper form-control-flush mb-5">
+                                        <label class="required form-label text-dark fs-4" for="position">직책</label>
+                                        <input class="mb-1 form-control form-control-lg form-control-solid"
+                                               id="position"
+                                               name="position"
+                                               type="text"
+                                               placeholder="직책을 입력해주세요"
+                                               required
+                                               maxlength="15">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-wrapper form-control-flush mb-5">
+                                        <label class="required form-label text-dark fs-4" for="nationality">국적</label>
+                                        <select class="form-select form-select-lg form-select-solid"
+                                                id="nationality"
+                                                name="nationality"
+                                                aria-label="nationality"
+                                                required>
+                                            <option value="" disabled selected>국적 선택</option>
+                                            <th:block th:each="nationality : ${nationalities}">
+                                                <option th:value="${nationality}" th:text="${nationality.description}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-wrapper form-control-flush mb-5">
+                                        <label class="required form-label text-dark fs-4" for="description">소개</label>
+                                        <textarea class="mb-1 form-control form-control-lg form-control-solid"
+                                                  id="description"
+                                                  name="description"
+                                                  placeholder="관리사를 소개해주세요" rows="2" data-kt-autosize="true"
+                                                  maxlength="50"
+                                                  required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-5 d-flex justify-content-center gap-2">
+                                    <button type="button" class="btn btn-sm btn-light fs-6" id="cancelButton">
+                                        취소
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-primary fs-6" id="modifyButton">
+                                        수정
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-primary fs-6" id="addButton">
+                                        추가
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- 입력한 프로그램 목록 -->
+                        <div id="therapists" class="py-5"></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script th:inline="javascript">
+    const therapists = [[${therapists}]];
+    if (therapists != null) {
+        window.TherapistModify.setTherapists(therapists);
+    }
+    window.TherapistModify.init();
+</script>
+</body>
+</html>

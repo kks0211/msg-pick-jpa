@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body id="kt_body" class="aside-enabled">
+
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div th:replace="/fragments/side-bar"></div>
+
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <!-- 대시보드 헤더 -->
+            <div th:replace="/fragments/dashboard-header :: dashboard-header('공지사항 관리')"></div>
+            <!-- 대시보드 헤더 -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div id="kt_content_container" class="container-fluid">
+                    공지사항 관리 페이지
+                    <!--<div class="table-responsive">
+                        <table class="table gs-7 gy-7 gx-7 table-row-bordered">
+                            <thead>
+                            <tr class="fs-6 fw-boldest text-gray-900">
+                                <th>NO</th>
+                                <th>아이디</th>
+                                <th>이름</th>
+                                <th>권한</th>
+                                <th>등록일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>tester</td>
+                                <td>김선우</td>
+                                <td>관리자</td>
+                                <td>20201123T16:22:53</td>
+                            </tr>
+                            &lt;!&ndash;<tr th:each="admin : ${admins}">
+                                <td th:text="${admin.getAdminId()}">adminId</td>
+                                <td th:text="${admin.getLoginId()}">loginId</td>
+                                <td th:text="${admin.getNameI()()}">name</td>
+                                <td th:text="${admin.getRole().getDescription()}">role</td>
+                                <td th:text="${admin.getCreatedAt()}">createdAt</td>
+                            </tr>&ndash;&gt;
+                            </tbody>
+                        </table>
+                    </div>-->
+                </div>
+            </div>
+            <!-- 컨텐츠 영역 -->
+
+            <div th:replace="/fragments/footer"></div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+</body>
+</html>

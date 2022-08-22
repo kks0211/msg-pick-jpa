@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msgpick.module.auth.mapper.AuthMapper">
+
+    <insert id="save">
+        insert into phone_verifications
+            (phone, expired_at, verification_code, verified_at)
+        values (#{phone}, #{expiredAt}, #{verificationCode}, #{verifiedAt})
+    </insert>
+
+    <select id="findByVerificationCode" resultType="boolean">
+        select case when count(*) >=1 then true else false end as isExisted
+        from phone_verifications
+        where verification_code = #{verificationCode}
+        and phone = #{phone}
+    </select>
+
+    <select id="findByPhoneVerifications" resultType="AuthCheckVerifiedRequest">
+        select phone, verification_code
+        from phone_verifications
+        where phone = #{phone}
+    </select>
+
+    <update id="update">
+        update phone_verifications
+        set verification_code = #{verificationCode}
+            , expired_at = #{expiredAt}
+        where phone = #{phone}
+    </update>
+
+    <delete id="delete">
+        delete from phone_verifications
+        where phone = #{phone}
+    </delete>
+
+</mapper>

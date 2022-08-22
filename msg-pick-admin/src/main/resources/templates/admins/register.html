@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body id="kt_body" class="aside-enabled">
+
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div th:replace="/fragments/side-bar"></div>
+
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <!-- 대시보드 헤더 -->
+            <div th:replace="/fragments/dashboard-header :: dashboard-header('관리자 등록')"></div>
+            <!-- 대시보드 헤더 -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div id="kt_content_container" class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-4">
+                            <form id="adminRegisterForm">
+                                <div class="row card card-body">
+                                    <!-- 아이디 -->
+                                    <div class="col-12">
+                                        <div class="form-wrapper form-control-flush mb-5">
+                                            <label class="form-label fw-boldest text-dark fs-6" for="loginId">아이디</label>
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control form-control-lg form-control-solid" id="loginId" name="loginId" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 아이디 -->
+
+                                    <!-- 아이디 -->
+                                    <div class="col-12">
+                                        <div class="form-wrapper form-control-flush mb-5">
+                                            <label class="form-label fw-boldest text-dark fs-6" for="name">이름</label>
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control form-control-lg form-control-solid" id="name" name="name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 아이디 -->
+
+                                    <!-- 비밀번호 -->
+                                    <div class="col-12">
+                                        <div class="form-wrapper form-control-flush mb-5">
+                                            <label class="form-label fw-boldest text-dark fs-6" for="password">비밀번호</label>
+                                            <input class="form-control form-control-lg form-control-solid" id="password" name="password" type="password" required>
+                                        </div>
+                                    </div>
+                                    <!-- 비밀번호 -->
+
+                                    <!-- 권한 -->
+                                    <div class="col-12">
+                                        <div class="form-wrapper form-control-flush mb-5">
+                                            <label class="form-label fw-boldest text-dark fs-6" for="role">권한</label>
+                                            <select class="form-select form-select-lg form-select-solid"
+                                                    id="role"
+                                                    name="role"
+                                                    aria-label="role"
+                                                    required>
+                                                <option value="" disabled selected>권한 선택</option>
+                                                <th:block th:each="role : ${roles}">
+                                                    <option th:value="${role}" th:text="${role.description}"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- 권한 -->
+
+                                    <div class="col-12 my-5">
+                                        <button type="button" class="btn btn-lg btn-danger fw-boldest fs-6 w-100"
+                                                id="registerButton">
+                                        <span class="indicator-label">
+                                            등록
+                                        </span>
+                                            <span class="indicator-progress">
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span> 등록
+                                        </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 컨텐츠 영역 -->
+
+            <div th:replace="/fragments/footer"></div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script>
+    window.AdminRegister.init();
+</script>
+</body>
+</html>

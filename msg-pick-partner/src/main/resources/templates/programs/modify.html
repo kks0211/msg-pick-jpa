@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+<body>
+
+<div class="d-flex">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="mt-20 text-center">
+                    <a th:href="@{/}" class="d-inline-block">
+                        <img class="h-50px pb-5"
+                             src="https://ceo-cdn.baemin.com/cdn/ceo-square/src/images/logo/ceo@2x.png?ver=687b9189405c0e41587aaa0c235bce71"
+                             alt="배민사장님광장">
+                    </a>
+                    <h1 class="fs-2 fw-boldest">입점 신청이 거절되었습니다.</h1>
+                </div>
+
+                <div class="alert bg-light-success my-10">
+                    <div class="d-flex flex-column">
+                        <h4 class="mb-1 text-dark">운영자 코멘트</h4>
+                        <span th:text="${shopInfo.getRejectMessage()}"></span>
+                    </div>
+                </div>
+
+                <div th:replace="shops/modify-tab"></div>
+
+                <div class="my-10" th:fragment="modify-program-tab">
+                    <div class="justify-content-center">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h2 class="fs-2 fw-boldest text-dark">프로그램 정보</h2>
+                            <button type="button" class="btn btn-sm btn-primary fs-6" id="showProgramFormButton">
+                                추가
+                            </button>
+                        </div>
+
+                        <form id="programForm" class="mt-5 border border-gray-200 p-5" style="display: none;">
+                            <div class="row">
+                                <input class="mb-1 form-control form-control-lg form-control-solid" id="index" hidden>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-wrapper form-control-flush mb-5">
+                                        <label class="required form-label text-dark fs-4" for="name">서비스 이름</label>
+                                        <input class="mb-1 form-control form-control-lg form-control-solid"
+                                               id="name"
+                                               name="name"
+                                               type="text"
+                                               placeholder="프로그램 명을 입력해주세요"
+                                               required
+                                               maxlength="15">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-wrapper form-control-flush mb-5">
+                                        <label class="required form-label text-dark fs-4" for="price">가격</label>
+                                        <input class="mb-1 form-control form-control-lg form-control-solid"
+                                               id="price"
+                                               name="price"
+                                               type="text"
+                                               placeholder="가격을 입력해주세요"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-wrapper form-control-flush mb-5">
+                                        <label class="required form-label text-dark fs-4" for="description">설명</label>
+                                        <textarea class="mb-1 form-control form-control-lg form-control-solid"
+                                                  id="description"
+                                                  name="description"
+                                                  placeholder="프로그램을 설명해주세요" rows="2" data-kt-autosize="true"
+                                                  maxlength="50"
+                                                  required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 my-5 d-flex justify-content-center gap-2">
+                                    <button type="button" class="btn btn-sm btn-light fs-6"
+                                            id="cancelButton">
+                                        취소
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-primary"
+                                            id="modifyButton">
+                                        수정
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-primary fs-6"
+                                            id="addButton">
+                                        추가
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- 입력한 프로그램 목록 -->
+                        <div id="programs" class="py-5"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script th:inline="javascript">
+    const programs = [[${programs}]];
+    if (programs != null) {
+        window.ProgramModify.setPrograms(programs);
+    }
+    window.ProgramModify.init();
+</script>
+</body>
+</html>

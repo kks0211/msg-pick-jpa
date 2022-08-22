@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msgpick.module.therapists.mapper.TherapistMapper">
+
+    <insert id="save" parameterType="java.util.List">
+        INSERT INTO therapists(
+        shop_id,
+        name,
+        position,
+        nationality,
+        description
+        ) VALUES
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.shopId}
+            ,#{item.name}
+            ,#{item.position}
+            ,#{item.nationality}
+            ,#{item.description}
+            )
+        </foreach>
+    </insert>
+
+    <select id="findByTherapistList" resultType="TherapistDetailResponse">
+        select therapist_id,
+               shop_id,
+               name,
+               position,
+               nationality,
+               description,
+               created_at,
+               updated_at
+        from Therapists
+        where deleted = false
+          and shop_id = #{shopId}
+    </select>
+
+</mapper>

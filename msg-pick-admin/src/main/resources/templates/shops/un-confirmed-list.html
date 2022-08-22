@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body id="kt_body" class="aside-enabled">
+
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div th:replace="/fragments/side-bar"></div>
+
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <!-- 대시보드 헤더 -->
+            <div th:replace="/fragments/dashboard-header :: dashboard-header('입점신청 목록')"></div>
+            <!-- 대시보드 헤더 -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div id="kt_content_container" class="container-fluid">
+
+                    <div class="d-flex">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <select class="form-select form-select-solid"
+                                        required>
+                                    <option value="" disabled selected>샵 유형 선택</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select form-select-solid"
+                                        required>
+                                    <option value="" disabled selected>샵 유형 선택</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="ml-auto">
+                            <a th:href="@{/admins/register}" type="button" class="btn btn-light-primary me-3">
+                                검색
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover gs-7 gy-5 gx-7 table-row-bordered">
+                            <thead>
+                            <tr class="fs-6 fw-boldest text-gray-900">
+                                <th>NO</th>
+                                <th>상호명</th>
+                                <th>담당자 연락처</th>
+                                <th>샵유형</th>
+                                <th>핵심상권</th>
+                                <th>등록일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${#lists.size(unConfirmedShops) eq 0 || unConfirmedShops eq null}">
+                                <td>조회된 내역이 없습니다.</td>
+                            </tr>
+                            <tr class="fs-6" th:if="${#lists.size(unConfirmedShops)}" th:each="shop : ${unConfirmedShops}">
+                                <td th:text="${shop.getShopId()}">NO</td>
+                                <td th:text="${shop.getName()}"><a href="#">상호명</a></td>
+                                <td th:text="${shop.getPhone()}">담당자 연락처</td>
+                                <td th:text="${shop.getType().getDescription()}">샵유형</td>
+                                <td th:text="${shop.getBusinessArea()}">핵심상권</td>
+                                <td th:text="${shop.getCreatedAt()}">등록일</td>
+                            </tr>
+                            <tr>
+                                <td>adsfasd</td>
+                                <td>adsfasd</td>
+                                <td>adsfasd</td>
+                                <td>adsfasd</td>
+                                <td>adsfasd</td>
+                                <td>adsfasd</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- 컨텐츠 영역 -->
+
+            <div th:replace="/fragments/footer"></div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+</body>
+</html>

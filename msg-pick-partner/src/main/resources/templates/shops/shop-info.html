@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body id="kt_body" class="aside-enabled">
+
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div th:replace="/fragments/side-bar"></div>
+
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <!-- 대시보드 헤더 -->
+            <div th:replace="/fragments/dashboard-header :: dashboard-header('샵 정보')"></div>
+            <!-- 대시보드 헤더 -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div id="kt_content_container" class="container-fluid">
+                    <div>
+                        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x border-0 mb-10 fs-1">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#shopDetail">샵정보</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#program">프로그램</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#therapist">관리사</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="shopDetail" role="tabpanel">
+
+                            <h3 class="fs-3 fw-bolder mb-5">기본정보</h3>
+                            <div class="card mb-10">
+                                <!--<div class="card-header border-0">
+                                    <h3 class="card-title fw-bolder">기본정보</h3>
+                                </div>-->
+                                <div class="card-body py-1">
+                                    <div class="table-responsive">
+                                        <table class="table table-row-bordered table-row-gray-200 gy-5 mb-0">
+                                            <colgroup>
+                                                <col style="width: 160px;">
+                                                <col style="max-width: 800px;">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">샵 유형</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getType().getDescription()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">상호명</th>
+                                                <td class="fs-4 text-gray-800" th:text="${shopInfo.getName()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">핵심상권</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getBusinessNumber()}"></td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">홈케어 가능지역</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getHomeCareArea()}"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">오는길</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getHowToCome()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">주소</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getAddressDetail() + shopInfo.getAddressDetail()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">연락처</th>
+                                                <td class="fs-4 text-gray-800" th:text="${shopInfo.getContact()}"></td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="fs-3 fw-bolder mb-5">테마</h3>
+                            <div class="card mb-10">
+                                <!--<div class="card-header border-0">
+                                    <h3 class="card-title fw-bolder">테마</h3>
+                                </div>-->
+                                <div class="card-body py-1">
+                                    <div class="table-responsive">
+                                        <table class="table table-row-bordered table-row-gray-200 gy-5 mb-0">
+                                            <colgroup>
+                                                <col style="width: 160px;">
+                                                <col style="max-width: 800px;">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">샵 테마</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getTheme().getDescription()}"></td>
+                                            </tr>
+                                            <!--<tr>
+                                                <th class="fs-4 fw-boldest">샵 규모</th>
+                                                <td class="fs-4 text-gray-800" th:text="${shopInfo.getScale().getDescription()}"></td>
+                                            </tr>-->
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">샵 규모</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getHomeCareScale().getDescription()}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="fs-3 fw-bolder mb-5">영업정보</h3>
+                            <div class="card mb-10">
+                                <!--<div class="card-header border-0">
+                                    <h3 class="card-title fw-bolder">영업정보</h3>
+                                </div>-->
+                                <div class="card-body py-1">
+                                    <div class="table-responsive">
+                                        <table class="table table-row-bordered table-row-gray-200 gy-5 mb-0">
+                                            <colgroup>
+                                                <col style="width: 160px;">
+                                                <col style="max-width: 800px;">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">휴일</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getDayOff().getDescription()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">오픈시간</th>
+                                                <td class="fs-4 text-gray-800" th:text="${shopInfo.getOpenAt()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">마감시간</th>
+                                                <td class="fs-4 text-gray-800" th:text="${shopInfo.getCloseAt()}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="fs-3 fw-bolder mb-5">운영정보</h3>
+                            <div class="card mb-10">
+                                <!--<div class="card-header border-0">
+                                    <h3 class="card-title fw-bolder">운영정보</h3>
+                                </div>-->
+                                <div class="card-body py-1">
+                                    <div class="table-responsive">
+                                        <table class="table table-row-bordered table-row-gray-200 gy-5 mb-0">
+                                            <colgroup>
+                                                <col style="width: 160px;">
+                                                <col style="max-width: 800px;">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">소개</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getIntroduce()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">공지사항</th>
+                                                <td class="fs-4 text-gray-800" th:text="${shopInfo.getNotice()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">서비스 대상</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getServiceTarget().getDescription()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">예약 에티켓</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getEtiquette().getDescription()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">서비스 시간</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getServiceTime().getDescription()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">매너 규정</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getManner().getDescription()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fs-4 fw-boldest">제공 서비스</th>
+                                                <td class="fs-4 text-gray-800"
+                                                    th:text="${shopInfo.getFacilities()}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="program" role="tabpanel">
+                            <div th:each="program : ${programs}">
+                                <div class="card mb-10">
+                                    <div class="card-body py-1">
+                                        <div class="table-responsive">
+                                            <table class="table table-row-bordered table-row-gray-200 gy-5 mb-0">
+                                                <colgroup>
+                                                    <col style="width: 160px;">
+                                                    <col style="max-width: 800px;">
+                                                </colgroup>
+                                                <tbody>
+                                                <tr>
+                                                    <th class="fs-4 fw-boldest">프로그램 명</th>
+                                                    <td class="fs-4 text-gray-800" th:text="${program.getName()}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="fs-4 fw-boldest">가격</th>
+                                                    <td class="fs-4 text-gray-800"
+                                                        th:text="${program.getPrice()}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="fs-4 fw-boldest">설명</th>
+                                                    <td class="fs-4 text-gray-800"
+                                                        th:text="${program.getDescription()}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="therapist" role="tabpanel">
+                            <div th:each="therapist : ${therapists}">
+                                <div class="card mb-10">
+                                    <div class="card-body py-1">
+                                        <div class="table-responsive">
+                                            <table class="table table-row-bordered table-row-gray-200 gy-5 mb-0">
+                                                <colgroup>
+                                                    <col style="width: 160px;">
+                                                    <col style="max-width: 800px;">
+                                                </colgroup>
+                                                <tbody>
+                                                <tr>
+                                                    <th class="fs-4 fw-boldest">이름(닉네임)</th>
+                                                    <td class="fs-4 text-gray-800" th:text="${therapist.getName()}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="fs-4 fw-boldest">직책</th>
+                                                    <td class="fs-4 text-gray-800"
+                                                        th:text="${therapist.getPosition()}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="fs-4 fw-boldest">국적</th>
+                                                    <td class="fs-4 text-gray-800"
+                                                        th:text="${therapist.getNationality().getDescription()}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="fs-4 fw-boldest">소개</th>
+                                                    <td class="fs-4 text-gray-800"
+                                                        th:text="${therapist.getDescription()}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 컨텐츠 영역 -->
+
+            <div th:replace="/fragments/footer"></div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+</body>
+</html>

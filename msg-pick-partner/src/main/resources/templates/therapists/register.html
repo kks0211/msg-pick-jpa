@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="my-10">
+                <!-- 입점신청 단계 -->
+                <div th:replace="fragments/enter-steps"></div>
+
+                <div class="mb-10 text-left">
+                    <p class="fs-3 fw-bold">
+                        마사지 관리사 정보를 입력해주세요.<br>
+                        관리사를 매력적으로 소개할수록 고객들이 예약할 확률이 높아집니다 :)
+                    </p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h2 class="fs-2 fw-boldest text-dark">관리사 정보</h2>
+                        <button type="button" class="btn btn-sm btn-primary fs-6" id="showRegisterFormButton">
+                            추가
+                        </button>
+                    </div>
+
+                    <form id="therapistRegisterForm" class="mt-5 border border-gray-200 p-5" style="display: none;">
+                        <div class="row">
+                            <input class="mb-1 form-control form-control-lg form-control-solid" id="index" hidden>
+                            <div class="col-12 col-md-4">
+                                <div class="col-12">
+                                    <div class="form-wrapper form-control-flush mb-5">
+                                        <label class="required form-label text-dark fs-4" for="name">이름</label>
+                                        <input class="mb-1 form-control form-control-lg form-control-solid"
+                                               id="name"
+                                               name="name"
+                                               type="text"
+                                               placeholder="이름을 입력해주세요"
+                                               required
+                                               maxlength="15">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="position">직책</label>
+                                    <input class="mb-1 form-control form-control-lg form-control-solid"
+                                           id="position"
+                                           name="position"
+                                           type="text"
+                                           placeholder="직책을 입력해주세요"
+                                           required
+                                           maxlength="15">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="nationality">국적</label>
+                                    <select class="form-select form-select-lg form-select-solid"
+                                            id="nationality"
+                                            name="nationality"
+                                            aria-label="nationality"
+                                            required>
+                                        <option value="" disabled selected>국적 선택</option>
+                                        <th:block th:each="nationality : ${nationalities}">
+                                            <option th:value="${nationality}" th:text="${nationality.description}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-wrapper form-control-flush mb-5">
+                                    <label class="required form-label text-dark fs-4" for="description">소개</label>
+                                    <textarea class="mb-1 form-control form-control-lg form-control-solid"
+                                              id="description"
+                                              name="description"
+                                              placeholder="관리사를 소개해주세요" rows="2" data-kt-autosize="true"
+                                              maxlength="50"
+                                              required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12 my-5 d-flex justify-content-center gap-2">
+                                <button type="button" class="btn btn-sm btn-light fs-6"
+                                        id="cancelButton">
+                                    취소
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary"
+                                        id="modifyButton">
+                                    수정
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary fs-6"
+                                        id="addButton">
+                                    추가
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- 입력한 프로그램 목록 -->
+                    <div id="therapists" class="py-5"></div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a class="w-100 btn btn-light" id="prevButton">이전</a>
+                    <a class="w-100 btn btn-primary" id="registerButton">
+                        <span class="indicator-label">
+                            입점신청
+                        </span>
+                        <span class="indicator-progress">
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span> 입점신청
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+<script>
+    window.TherapistRegister.init();
+</script>
+</body>
+</html>

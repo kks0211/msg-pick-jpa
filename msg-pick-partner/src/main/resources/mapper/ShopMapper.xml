@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msgpick.module.shops.mapper.ShopMapper">
+
+    <insert id="save" parameterType="ShopRegisterRequest" useGeneratedKeys="true" keyProperty="shopId">
+        insert into shops
+        (partner_id,
+         type,
+         name,
+         business_area,
+         home_care_area,
+         home_care_scale,
+         how_to_come,
+         zonecode,
+         address,
+         address_detail,
+         contact,
+         theme,
+         scale,
+         day_off,
+         open_at,
+         close_at,
+         payment,
+         introduce,
+         notice,
+         service_target,
+         etiquette,
+         service_time,
+         manner,
+         status,
+         hit,
+         facilities)
+        values (#{partnerId},
+                #{type},
+                #{name},
+                #{businessArea},
+                #{homeCareArea},
+                #{homeCareScale},
+                #{howToCome},
+                #{zonecode},
+                #{address},
+                #{addressDetail},
+                #{contact},
+                #{theme},
+                #{scale},
+                #{dayOff},
+                #{openAt},
+                #{closeAt},
+                #{payment},
+                #{introduce},
+                #{notice},
+                #{serviceTarget},
+                #{etiquette},
+                #{serviceTime},
+                #{manner},
+                'REVIEW',
+                0,
+                #{facilityData})
+    </insert>
+
+    <select id="findByShopDetail" resultType="ShopDetailResponse">
+        select shop_id,
+               partner_id,
+               type,
+               name,
+               business_area,
+               home_care_area,
+               status,
+               how_to_come,
+               zonecode,
+               address,
+               address_detail,
+               latitude,
+               longitude,
+               contact,
+               open_at,
+               scale,
+               day_off,
+               theme,
+               close_at,
+               hit,
+               introduce,
+               notice,
+               service_target,
+               created_at,
+               updated_at,
+               service_time,
+               etiquette,
+               manner,
+               home_care_scale,
+               payment,
+               facilities as facilityData,
+               reject_message
+        from shops
+        where shop_id > 0
+          and deleted = false
+          and partner_id = #{partnerId}
+    </select>
+
+    <select id="findByShopSummary" resultType="ShopSummaryResponse">
+        select shop_id,
+               partner_id,
+               status
+        from shops
+        where deleted = false
+          and partner_id = #{partnerId}
+    </select>
+
+    <update id="update" parameterType="ShopUpdateRequest">
+        update shops
+        set type            = #{type},
+            name            = #{name},
+            business_area   = #{businessArea},
+            home_care_area  = #{homeCareArea},
+            how_to_come     = #{howToCome},
+            zonecode        = #{zonecode},
+            address         = #{address},
+            address_detail  = #{addressDetail},
+            contact         = #{contact},
+            open_at         = #{openAt},
+            scale           = #{scale},
+            day_off         = #{dayOff},
+            theme           = #{theme},
+            close_at        = #{closeAt},
+            introduce       = #{introduce},
+            notice          = #{notice},
+            service_target  = #{serviceTarget},
+            updated_at      = now(),
+            service_time    = #{serviceTime},
+            etiquette       = #{etiquette},
+            manner          = #{manner},
+            home_care_scale = #{homeCareScale},
+            payment         = #{payment},
+            facilities      = #{facilityData}
+        where shop_id = #{shopId}
+    </update>
+
+    <select id="findByUpdateShop" resultType="ShopDetailResponse">
+        select shop_id,
+               partner_id,
+               type,
+               name,
+               business_area,
+               home_care_area,
+               status,
+               how_to_come,
+               zonecode,
+               address,
+               address_detail,
+               latitude,
+               longitude,
+               contact,
+               open_at,
+               scale,
+               day_off,
+               theme,
+               close_at,
+               hit,
+               introduce,
+               notice,
+               service_target,
+               created_at,
+               updated_at,
+               service_time,
+               etiquette,
+               manner,
+               home_care_scale,
+               payment,
+               facilities as facilityData
+        from shops
+        where shop_id > 0
+          and deleted = false
+          and shop_id = #{shopId}
+    </select>
+
+    <insert id="saveImg">
+        insert into shops_imgs
+        (shop_id,
+         img_path)
+        values (#{shopId},
+                #{imgPath})
+
+    </insert>
+
+    <select id="findByShopImg" resultType="ShopImgPathResponse">
+        select img_path
+        from shops_imgs
+        where shop_id = #{shopId}
+    </select>
+
+    <delete id="deleteImg">
+        delete
+        from shops_imgs
+        where shop_id = #{shopId}
+    </delete>
+
+</mapper>

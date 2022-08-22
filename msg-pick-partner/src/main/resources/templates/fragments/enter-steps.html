@@ -1,0 +1,27 @@
+<!-- 입점신청 단계 -->
+<div th:fragment="enter-steps" class="row my-20">
+  <div class="col-4">
+    <div class="text-center">
+      <div class="d-flex flex-center">
+        <span class="fs-3 badge badge-circle fw-bolder p-5 me-3" th:classappend="${#httpServletRequest.requestURI == '/shops/register'} ? 'badge-light-danger' : 'badge-light'"> 1</span>
+        <div class="fw-bolder" th:classappend="${#httpServletRequest.requestURI == '/shops/register'} ? 'text-dark fs-3' : 'text-muted fs-5'">샵정보 등록</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="text-center">
+      <div class="d-flex flex-center">
+        <span class="fs-3 badge badge-circle fw-bolder p-5 me-3" th:classappend="${#httpServletRequest.requestURI == '/programs/register'} ? 'badge-light-danger' : 'badge-light'">2</span>
+        <div class="fw-bolder" th:classappend="${#httpServletRequest.requestURI == '/programs/register'} ? 'text-dark fs-3' : 'text-muted fs-5'">프로그램 등록</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="text-center">
+      <div class="d-flex flex-center">
+        <span class="fs-3 badge badge-circle fw-bolder p-5 me-3" th:classappend="${#httpServletRequest.requestURI == '/therapists/register'} ? 'badge-light-danger' : 'badge-light'">3</span>
+        <div class="fw-bolder" th:classappend="${#httpServletRequest.requestURI == '/therapists/register'} ? 'text-dark fs-3' : 'text-muted fs-5'">관리사 등록</div>
+      </div>
+    </div>
+  </div>
+</div>

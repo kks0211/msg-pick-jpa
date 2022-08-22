@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body id="kt_body" class="aside-enabled">
+
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div th:replace="/fragments/side-bar"></div>
+
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <!-- 대시보드 헤더 -->
+            <div th:replace="/fragments/dashboard-header :: dashboard-header('관리자 목록')"></div>
+            <!-- 대시보드 헤더 -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div id="kt_content_container" class="container-fluid">
+                    <div class="d-flex justify-content-end">
+                        <a th:href="@{/admins/register}" type="button" class="btn btn-light-primary me-3">
+                            관리자 추가
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover gs-7 gy-5 gx-7 table-row-bordered">
+                            <thead>
+                            <tr class="fs-6 fw-boldest text-gray-900">
+                                <th>NO</th>
+                                <th>아이디</th>
+                                <th>이름</th>
+                                <th>권한</th>
+                                <th>등록일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="admin : ${admins}">
+                                <td th:text="${admin.getAdminId()}">adminId</td>
+                                <td th:text="${admin.getLoginId()}">loginId</td>
+                                <td th:text="${admin.getName()}">name</td>
+                                <td th:text="${admin.getRole().getDescription()}">role</td>
+                                <td th:text="${admin.getCreatedAt()}">createdAt</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}"
+                 th:with="info=${params.paginationInfo}" aria-label="Page navigation example">
+                <ul class="pagination pagination-sm">
+                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(params.currentPageNo - 1)} ]])">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+                    </li>
+                    <li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'page-item active'">
+                        <a class="page-link" href="javascript:void(0)" th:text="${pageNo}"
+                           th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+                    </li>
+                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(params.currentPageNo + 1)} ]])">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+                    </li>
+                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- 컨텐츠 영역 -->
+
+            <div th:replace="/fragments/footer"></div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+</body>
+</html>

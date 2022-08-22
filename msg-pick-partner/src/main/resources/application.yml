@@ -1,0 +1,124 @@
+spring:
+  profiles:
+    active: local
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+
+---
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      #location: /Users/kwanseokkim/dev/upload/tmp
+      location: C:/upload/tmp
+      file-size-threshold: 10MB
+  config:
+    activate:
+      on-profile: local
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  #  datasource:
+  #    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  #    url: jdbc:log4jdbc:h2:mem:sunnygolf;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+  #    username: sa
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/massage
+    driver-class-name: org.postgresql.Driver
+    username: massage
+    password: massage
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    cache: false
+    template-resolver-order: 0
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+file:
+  #upload-path: /Users/kwanseokkim/dev/upload
+  upload-path: C:/upload
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:sunnygolf;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+app:
+  jwtSecret: QXdnfW1WGs1d1Rug8ihS8esjrtBtzosE
+
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sunnygolf
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: off
+
+app:
+  jwtSecret: XDrITd7XDcbZ56JJjxTStnU1VrJU5fxN
+
+logging.level:
+  org.hibernate.SQL: debug
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/massage
+    driver-class-name: org.postgresql.Driver
+    username: massage
+    password: massage
+
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    cache: false
+    template-resolver-order: 0
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+file:
+  upload-path: /home/sinsa/file/photos

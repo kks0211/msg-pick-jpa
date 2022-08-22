@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head"></head>
+
+<body id="kt_body" class="aside-enabled">
+
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div th:replace="/fragments/side-bar"></div>
+
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <!-- 대시보드 헤더 -->
+            <div th:replace="/fragments/dashboard-header :: dashboard-header('샵 목록')"></div>
+            <!-- 대시보드 헤더 -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div id="kt_content_container" class="container-fluid">
+
+                    <div class="table-responsive">
+                        <table class="table gs-7 gy-7 gx-7">
+                            <thead>
+                            <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                                <th>NO</th>
+                                <th>담당자 연락처</th>
+                                <th>샵유형</th>
+                                <th>상호명</th>
+                                <th>핵심상권</th>
+                                <th>등록일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--<tr th:each="shop : ${unConfirmedShops}">
+                                <td th:text="${shop.getShopId()}">NO</td>
+                                <td th:text="${shop.getPhone()}">담당자 연락처</td>
+                                <td th:text="${shop.getType().getDescription()}">샵유형</td>
+                                <td th:text="${shop.getName()}">상호명</td>
+                                <td th:text="${shop.getBusinessArea()}">핵심상권</td>
+                                <td th:text="${shop.getCreatedAt()}">등록일</td>
+                            </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- 컨텐츠 영역 -->
+
+            <div th:replace="/fragments/footer"></div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/script"></th:block>
+</body>
+</html>

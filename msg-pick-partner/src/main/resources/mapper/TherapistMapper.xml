@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msgpick.module.therapists.mapper.TherapistMapper">
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT INTO therapists (
+        shop_id,
+        name,
+        position,
+        nationality,
+        description
+        ) VALUES
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.shopId}
+            ,#{item.name}
+            ,#{item.position}
+            ,#{item.nationality}
+            ,#{item.description}
+            )
+        </foreach>
+    </insert>
+
+    <select id="findByTherapistList" resultType="TherapistDetailResponse">
+        select therapist_id,
+               shop_id,
+               name,
+               position,
+               nationality,
+               description,
+               created_at,
+               updated_at
+        from therapists
+        where therapist_id > 0
+          and deleted = false
+          and shop_id = #{shopId}
+        order by updated_at desc
+    </select>
+
+    <select id="findByTherapistListPage" resultType="TherapistDetailResponse">
+        <![CDATA[
+        select therapist_id,
+               shop_id,
+               name,
+               position,
+               nationality,
+               description,
+               created_at,
+               updated_at
+        from therapists
+        where therapist_id > 0
+          and deleted = false
+          and shop_id = #{shopId}
+        order by updated_at desc
+            limit #{recordsPerPage}
+        offset #{paginationInfo.firstRecordIndex}
+        ]]>
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        select count(*)
+        from therapists
+        where therapist_id > 0
+          and deleted = false
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="therapistId">
+        INSERT INTO therapists (shop_id,
+                                name,
+                                position,
+                                nationality,
+                                description)
+        VALUES ( #{shopId}
+               , #{name}
+               , #{position}
+               , #{nationality}
+               , #{description})
+    </insert>
+
+    <update id="update">
+        update therapists
+        set name        = #{name},
+            position    = #{position},
+            nationality = #{nationality},
+            description = #{description},
+            updated_at  = now()
+        where therapist_id = #{therapistId}
+    </update>
+
+    <update id="delete">
+        update therapists
+        set deleted    = true,
+            updated_at = now()
+        where therapist_id = #{therapistId}
+    </update>
+
+    <select id="findByTherapist" resultType="TherapistDetailResponse">
+        select therapist_id,
+               shop_id,
+               name,
+               position,
+               nationality,
+               description,
+               created_at,
+               updated_at
+        from therapists
+        where therapist_id > 0
+          and deleted = false
+          and therapist_id = #{therapistId}
+    </select>
+
+</mapper>

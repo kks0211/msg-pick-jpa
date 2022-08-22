@@ -1,0 +1,1 @@
+docker-compose -p msg-jpa-db up -d
