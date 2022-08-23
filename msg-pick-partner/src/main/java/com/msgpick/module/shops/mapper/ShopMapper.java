@@ -1,12 +1,9 @@
 package com.msgpick.module.shops.mapper;
 
 import com.msgpick.module.shops.dto.*;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-@Mapper
 public interface ShopMapper {
     Long save(ShopRegisterRequest shop);
 
@@ -18,7 +15,7 @@ public interface ShopMapper {
 
     ShopDetailResponse findByUpdateShop(Long shopId);
 
-    void saveImg(@Param("shopId") Long shopId, @Param("imgPath") String imgPath);
+    void saveImg(Long shopId, String imgPath);
 
     List<ShopImgPathResponse> findByShopImg(Long shopId);
 

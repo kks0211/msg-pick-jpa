@@ -1,12 +1,14 @@
 package com.msgpick.module.auth.service;
 
-import com.msgpick.module.auth.dto.AuthCheckVerifiedRequest;
-import com.msgpick.module.auth.dto.AuthVerifiedRequest;
-import com.msgpick.module.partners.dto.PartnerRegisterRequest;
+import com.msgpick.module.auth.domain.Auth;
+import com.msgpick.module.auth.dto.request.AuthCheckVerifiedRequest;
+import com.msgpick.module.auth.dto.request.AuthVerifiedRequest;
+import com.msgpick.module.auth.repository.AuthRepository;
+import com.msgpick.module.partners.dto.PartnerRegisterRequestDto;
+import com.msgpick.module.partners.mapper.PartnerMapper;
+import com.msgpick.module.partners.repository.PartnerRepository;
 import com.msgpick.msgpick.global.common.exception.BaseException;
 import com.msgpick.msgpick.global.common.response.ErrorCode;
-import com.msgpick.module.auth.mapper.AuthMapper;
-import com.msgpick.module.partners.mapper.PartnerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
-    private final AuthMapper authMapper;
+    private final AuthRepository authRepository;
+    private final PartnerRepository partnerRepository;
     private final PartnerMapper partnerMapper;
 
 
@@ -27,32 +30,34 @@ public class AuthService {
     }
 
     @Transactional
-    public Long registerPartner(PartnerRegisterRequest request) {
-        request.encodePassword(passwordEncoder);
-        return partnerMapper.save(request);
+    public void registerPartner(PartnerRegisterRequestDto request) {
+        //request.encodePassword(passwordEncoder);
+        var partnerDto = request.toDto();
+        partnerRepository.save(partnerDto.toEntity());
     }
 
     @Transactional
-    public int registerAuth(AuthVerifiedRequest request) {
-        var byPhoneNumber = partnerMapper.findByPhoneNumber(request.getPhone());
+    public void registerAuth(AuthVerifiedRequest request) {
+        var byPhoneNumber = partnerRepository.findByPhone(request.phone());
         if (byPhoneNumber != null) {
             throw new BaseException(ErrorCode.PHONE_ALREADY_USED);
         }
 
         var phoneVerification =  request.toPhoneVerification();
-        var auth = authMapper.findByPhoneVerifications(request.getPhone());
+        Auth auth =  authRepository.findByPhone(phoneVerification.phone()).orElseThrow();
+
         if(auth == null) {
-            return authMapper.save(phoneVerification);
+            authRepository.save(auth).isDeleted();
+        } else {
+            auth.update(auth);
         }
-        return authMapper.update(phoneVerification);
     }
 
-    public boolean findVerifications(AuthCheckVerifiedRequest request) {
-        var checkVerifiedNumber = authMapper.findByVerificationCode(request);
-        if(!checkVerifiedNumber) {
-            throw new BaseException(ErrorCode.VERIFICATION_NUMBER_NOT_MATCHED);
-        }
-        var authComplete = authMapper.delete(request.getPhone());
-        return checkVerifiedNumber;
+    @Transactional
+    public void findVerifications(AuthCheckVerifiedRequest request) {
+        Auth checkVerifiedNumber = authRepository.findByPhone(request.phone())
+                                        .orElseThrow(() -> new BaseException(ErrorCode.VERIFICATION_NUMBER_NOT_MATCHED));
+
+        authRepository.delete(checkVerifiedNumber);
     }
 }

@@ -1,10 +1,10 @@
 package com.msgpick.module.auth.controller;
 
-import com.msgpick.module.auth.dto.AuthCheckVerifiedRequest;
-import com.msgpick.module.auth.dto.AuthVerifiedRequest;
-import com.msgpick.module.partners.dto.PartnerRegisterRequest;
-import com.msgpick.msgpick.global.common.response.CommonResponse;
+import com.msgpick.module.auth.dto.request.AuthCheckVerifiedRequest;
+import com.msgpick.module.auth.dto.request.AuthVerifiedRequest;
 import com.msgpick.module.auth.service.AuthService;
+import com.msgpick.module.partners.dto.PartnerRegisterRequestDto;
+import com.msgpick.msgpick.global.common.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,19 +19,19 @@ public class AuthApiController {
 
     @PostMapping("/phone-verifications/new")
     public CommonResponse registerAuth(@RequestBody AuthVerifiedRequest request) {
-        var sendAuth = authService.registerAuth(request);
+        authService.registerAuth(request);
         return CommonResponse.success(null, "휴대폰 인증번호 발송");
     }
 
     @PostMapping("/phone-verifications/confirm")
     public CommonResponse findVerifications(@RequestBody AuthCheckVerifiedRequest request) {
-        var sendAuth = authService.findVerifications(request);
+        authService.findVerifications(request);
         return CommonResponse.success(null, "휴대폰 인증 완료");
     }
 
     @PostMapping("/sign-up")
-    public CommonResponse registerPartner(@RequestBody @Valid PartnerRegisterRequest request) {
-        var partnerId = authService.registerPartner(request);
+    public CommonResponse registerPartner(@RequestBody @Valid PartnerRegisterRequestDto request) {
+        authService.registerPartner(request);
         return CommonResponse.success(null, "파트너 등록 성공");
     }
 

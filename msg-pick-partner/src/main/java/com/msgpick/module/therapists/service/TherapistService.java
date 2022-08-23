@@ -21,12 +21,13 @@ public class TherapistService {
 
         var totalCount = therapistMapper.getTotalCount();
 
-        PaginationInfo paginationInfo = new PaginationInfo(therapistDetailResponse);
+       /* PaginationInfo paginationInfo = new PaginationInfo(therapistDetailResponse);
         paginationInfo.setTotalRecordCount(totalCount);
 
         therapistDetailResponse.setPaginationInfo(paginationInfo);
 
-        return therapistMapper.findByTherapistListPage(therapistDetailResponse);
+        return therapistMapper.findByTherapistListPage(therapistDetailResponse);*/
+        return null;
     }
 
     @Transactional(readOnly = true)

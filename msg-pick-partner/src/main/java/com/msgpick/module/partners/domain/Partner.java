@@ -1,11 +1,13 @@
 package com.msgpick.module.partners.domain;
 
+import com.msgpick.msgpick.code.PartnerRole;
 import com.msgpick.msgpick.code.Role;
 import com.msgpick.msgpick.global.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -25,17 +27,17 @@ public class Partner extends BaseEntity {
     private String phone;
     private String password;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private PartnerRole role;
 
     @Builder
     public Partner(String email, String phone, String password, Role role) {
         this.email = email;
         this.phone = phone;
         this.password = password;
-        this.role = Role.MANAGER;
+        this.role = PartnerRole.OWNER;
     }
 
-    public static Partner of(String email, String phone, String password, Role role) {
+    public static Partner of(String email, String phone, String password) {
         return Partner.builder()
                 .email(email)
                 .phone(phone)
