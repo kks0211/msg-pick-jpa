@@ -1,5 +1,6 @@
 package com.msgpick.module.dashboard;
 
+import com.msgpick.infra.security.PartnerPrincipal;
 import com.msgpick.module.shops.service.ShopService;
 import com.msgpick.msgpick.code.Status;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,9 @@ public class DashboardController {
     private final ShopService shopService;
 
     @GetMapping("/dashboard")
-    public String dashboardPage(@AuthenticationPrincipal CustomUserDetails currentUser) {
+    public String dashboardPage(@AuthenticationPrincipal PartnerPrincipal currentUser) {
 
-        var shopInfo = shopService.findShopSummary(currentUser.getPartnerId());
+        var shopInfo = shopService.findShopSummary(currentUser.partnerId());
 
         if (shopInfo == null) {
             return "redirect:/shops/register";

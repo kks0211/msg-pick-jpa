@@ -4,9 +4,9 @@ import com.google.common.io.Files;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.programs.mapper.ProgramMapper;
 import com.msgpick.module.shops.dto.ShopDetailResponse;
-import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
 import com.msgpick.module.shops.dto.ShopSummaryResponse;
 import com.msgpick.module.shops.dto.ShopUpdateRequest;
+import com.msgpick.module.shops.dto.request.ShopRegisterRequestDto;
 import com.msgpick.module.shops.mapper.ShopMapper;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.module.therapists.mapper.TherapistMapper;
@@ -45,7 +45,10 @@ public class ShopService {
                            @NotNull List<TherapistRegisterRequest> registerTherapistList) throws Exception {
 
         //  shop
-        ShopRegisterRequest requestShop = (ShopRegisterRequest) shopSession;
+        ShopRegisterRequestDto requestShop = (ShopRegisterRequestDto) shopSession;
+        var test = requestShop.toDto();
+
+        requestShop.partnerId();
         requestShop.setPartnerId(partnerId);
 
         String facilityData = requestShop.getFacilities()
