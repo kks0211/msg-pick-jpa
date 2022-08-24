@@ -4,8 +4,7 @@ import com.msgpick.module.auth.domain.Auth;
 import com.msgpick.module.auth.dto.request.AuthCheckVerifiedRequest;
 import com.msgpick.module.auth.dto.request.AuthVerifiedRequest;
 import com.msgpick.module.auth.repository.AuthRepository;
-import com.msgpick.module.partners.dto.PartnerRegisterRequestDto;
-import com.msgpick.module.partners.mapper.PartnerMapper;
+import com.msgpick.module.partners.dto.request.PartnerRegisterRequestDto;
 import com.msgpick.module.partners.repository.PartnerRepository;
 import com.msgpick.msgpick.global.common.exception.BaseException;
 import com.msgpick.msgpick.global.common.response.ErrorCode;
@@ -22,12 +21,11 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthRepository authRepository;
     private final PartnerRepository partnerRepository;
-    private final PartnerMapper partnerMapper;
 
 
-    public boolean ifExistEmail(String email) {
+    /*public boolean ifExistEmail(String email) {
         return partnerMapper.findByEmail(email);
-    }
+    }*/
 
     @Transactional
     public void registerPartner(PartnerRegisterRequestDto request) {

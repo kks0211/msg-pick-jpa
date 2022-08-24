@@ -1,6 +1,7 @@
 package com.msgpick.module.shops.mapper;
 
 import com.msgpick.module.shops.dto.*;
+import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
 
 import java.util.List;
 

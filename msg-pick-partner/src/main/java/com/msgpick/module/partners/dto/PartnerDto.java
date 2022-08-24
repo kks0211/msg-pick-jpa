@@ -2,6 +2,7 @@ package com.msgpick.module.partners.dto;
 
 import com.msgpick.module.partners.domain.Partner;
 import com.msgpick.msgpick.code.PartnerRole;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 

@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record PartnerPrincipal(
+         Long partnerId,
          String phone,
          String email,
          String password,
@@ -18,10 +19,12 @@ public record PartnerPrincipal(
 ) implements UserDetails
 {
 
-    public static PartnerPrincipal of (String phone, String email, String password) {
+    public static PartnerPrincipal of (Long partnerId, String phone, String email, String password) {
         Set<PartnerRole> roleTypes = Set.of(PartnerRole.OWNER);
 
-        return new PartnerPrincipal(phone,
+        return new PartnerPrincipal(
+                partnerId,
+                phone,
                 email,
                 password,
                 roleTypes.stream()
@@ -33,6 +36,7 @@ public record PartnerPrincipal(
 
     public static PartnerPrincipal from(PartnerDto dto) {
         return PartnerPrincipal.of(
+                dto.partnerId(),
                 dto.phone(),
                 dto.email(),
                 dto.password()

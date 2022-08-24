@@ -1,10 +1,8 @@
 package com.msgpick.module.shops.controller;
 
-import com.google.common.io.Files;
-import com.msgpick.infra.security.CustomUserDetails;
+import com.msgpick.infra.security.PartnerPrincipal;
 import com.msgpick.module.programs.service.ProgramService;
-import com.msgpick.module.shops.dto.ShopImgPathResponse;
-import com.msgpick.module.shops.dto.ShopRegisterRequest;
+import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
 import com.msgpick.module.shops.service.ShopService;
 import com.msgpick.module.therapists.dto.TherapistDetailResponse;
 import com.msgpick.module.therapists.service.TherapistService;
@@ -21,12 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -40,9 +35,9 @@ public class ShopController {
     private final TherapistService therapistService;
 
     @GetMapping("/register")
-    public String shopRegisterPage(Model model, RedirectAttributes rttr, @AuthenticationPrincipal CustomUserDetails currentUser,
+    public String shopRegisterPage(Model model, RedirectAttributes rttr, @AuthenticationPrincipal PartnerPrincipal currentUser,
                                    @ModelAttribute("params") TherapistDetailResponse therapistDetailResponse) throws Exception {
-        var shopInfo = shopService.findShopDetail(currentUser.getPartnerId());
+        var shopInfo = shopService.findShopDetail(currentUser.partnerId());
 
         if (shopInfo != null && shopInfo.getStatus() == Status.REVIEW) {
             return "redirect:/shops/register-complete";
@@ -93,8 +88,8 @@ public class ShopController {
     }
 
     @GetMapping("/register-complete")
-    public String registerCompletePage(@AuthenticationPrincipal CustomUserDetails currentUser) {
-        var shopInfo = shopService.findShopSummary(currentUser.getPartnerId());
+    public String registerCompletePage(@AuthenticationPrincipal PartnerPrincipal currentUser) {
+        var shopInfo = shopService.findShopSummary(currentUser.partnerId());
 
         if (shopInfo != null && shopInfo.getStatus() == Status.REVIEW) {
             return "shops/register-complete";
@@ -104,8 +99,8 @@ public class ShopController {
     }
 
     @GetMapping("/modify")
-    public String modifyShopPage(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-        var shopInfo = shopService.findShopDetail(currentUser.getPartnerId());
+    public String modifyShopPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
+        var shopInfo = shopService.findShopDetail(currentUser.partnerId());
 
         model.addAttribute("shopInfo", shopInfo);
         model.addAttribute("types", Type.values());
@@ -124,8 +119,8 @@ public class ShopController {
     }
 
     @GetMapping
-    public String shopInfoPage(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-        var shopInfo = shopService.findShopDetail(currentUser.getPartnerId());
+    public String shopInfoPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
+        var shopInfo = shopService.findShopDetail(currentUser.partnerId());
         var programs = programService.findProgramList(shopInfo.getShopId());
         var therapists = therapistService.findTherapistList(shopInfo.getShopId());
 

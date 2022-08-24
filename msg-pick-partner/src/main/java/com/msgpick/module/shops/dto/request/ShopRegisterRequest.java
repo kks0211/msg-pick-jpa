@@ -1,4 +1,4 @@
-package com.msgpick.module.shops.dto;
+package com.msgpick.module.shops.dto.request;
 
 import com.msgpick.msgpick.code.*;
 import lombok.*;

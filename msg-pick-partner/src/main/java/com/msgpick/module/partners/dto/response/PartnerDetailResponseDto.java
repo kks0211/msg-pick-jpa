@@ -1,4 +1,4 @@
-package com.msgpick.module.partners.dto;
+package com.msgpick.module.partners.dto.response;
 
 import com.msgpick.module.partners.domain.Partner;
 import com.msgpick.msgpick.code.PartnerRole;

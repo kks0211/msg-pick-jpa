@@ -1,6 +1,5 @@
 package com.msgpick.module.dashboard;
 
-import com.msgpick.infra.security.CustomUserDetails;
 import com.msgpick.module.shops.service.ShopService;
 import com.msgpick.msgpick.code.Status;
 import lombok.RequiredArgsConstructor;

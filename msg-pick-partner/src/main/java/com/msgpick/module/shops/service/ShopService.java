@@ -4,7 +4,7 @@ import com.google.common.io.Files;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.programs.mapper.ProgramMapper;
 import com.msgpick.module.shops.dto.ShopDetailResponse;
-import com.msgpick.module.shops.dto.ShopRegisterRequest;
+import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
 import com.msgpick.module.shops.dto.ShopSummaryResponse;
 import com.msgpick.module.shops.dto.ShopUpdateRequest;
 import com.msgpick.module.shops.mapper.ShopMapper;

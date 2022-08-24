@@ -37,4 +37,6 @@ public class Auth extends BaseEntity {
         this.expiredAt = auth.getExpiredAt();
     }
 
+
+
 }

@@ -1,7 +1,7 @@
 package com.msgpick.module.shops.controller;
 
-import com.msgpick.module.shops.dto.ShopRegisterRequest;
 import com.msgpick.module.shops.dto.ShopUpdateRequest;
+import com.msgpick.module.shops.dto.request.ShopRegisterRequestDto;
 import com.msgpick.module.shops.service.ShopService;
 import com.msgpick.msgpick.global.common.response.CommonResponse;
 import com.msgpick.msgpick.utils.SessionUtil;
@@ -21,7 +21,7 @@ public class ShopApiController {
     private final ShopService shopService;
 
     @PostMapping(value = "/register")
-    public CommonResponse registerShopApi(@RequestPart(name = "payload") ShopRegisterRequest shopRegisterRequest,
+    public CommonResponse registerShopApi(@RequestPart(name = "payload") ShopRegisterRequestDto shopRegisterRequest,
                                           @RequestPart(name = "files") List<MultipartFile> files) throws Exception {
 
         SessionUtil.setAttribute(SessionUtil.REGISTER_SHOP_INFO, shopRegisterRequest);

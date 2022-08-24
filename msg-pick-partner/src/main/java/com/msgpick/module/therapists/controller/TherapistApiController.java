@@ -1,6 +1,5 @@
 package com.msgpick.module.therapists.controller;
 
-import com.msgpick.infra.security.CustomUserDetails;
 import com.msgpick.module.shops.service.ShopService;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.module.therapists.dto.TherapistUpdateRequest;

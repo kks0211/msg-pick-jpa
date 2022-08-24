@@ -1,11 +1,7 @@
 package com.msgpick.module.therapists.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.msgpick.infra.security.CustomUserDetails;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
-import com.msgpick.module.programs.service.ProgramService;
 import com.msgpick.module.shops.service.ShopService;
-import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.module.therapists.service.TherapistService;
 import com.msgpick.msgpick.code.Nationality;
 import com.msgpick.msgpick.utils.SessionUtil;

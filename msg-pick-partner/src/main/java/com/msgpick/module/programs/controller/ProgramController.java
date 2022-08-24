@@ -1,6 +1,5 @@
 package com.msgpick.module.programs.controller;
 
-import com.msgpick.infra.security.CustomUserDetails;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.programs.service.ProgramService;
 import com.msgpick.module.shops.service.ShopService;

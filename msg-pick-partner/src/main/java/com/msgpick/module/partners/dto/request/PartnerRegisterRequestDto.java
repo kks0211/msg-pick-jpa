@@ -1,4 +1,6 @@
-package com.msgpick.module.partners.dto;
+package com.msgpick.module.partners.dto.request;
+
+import com.msgpick.module.partners.dto.PartnerDto;
 
 import java.time.LocalDateTime;
 

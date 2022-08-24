@@ -1,7 +1,7 @@
 package com.msgpick.module.partners.service;
 
-import com.msgpick.module.partners.dto.PartnerDetailResponseDto;
-import com.msgpick.module.partners.dto.PartnerRegisterRequestDto;
+import com.msgpick.module.partners.dto.response.PartnerDetailResponseDto;
+import com.msgpick.module.partners.dto.request.PartnerRegisterRequestDto;
 import com.msgpick.module.partners.repository.PartnerRepository;
 import com.msgpick.msgpick.global.common.exception.BaseException;
 import com.msgpick.msgpick.global.common.response.ErrorCode;

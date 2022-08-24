@@ -3,7 +3,7 @@ package com.msgpick.module.auth.controller;
 import com.msgpick.module.auth.dto.request.AuthCheckVerifiedRequest;
 import com.msgpick.module.auth.dto.request.AuthVerifiedRequest;
 import com.msgpick.module.auth.service.AuthService;
-import com.msgpick.module.partners.dto.PartnerRegisterRequestDto;
+import com.msgpick.module.partners.dto.request.PartnerRegisterRequestDto;
 import com.msgpick.msgpick.global.common.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
