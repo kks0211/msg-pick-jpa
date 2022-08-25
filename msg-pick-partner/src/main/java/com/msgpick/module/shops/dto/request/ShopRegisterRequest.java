@@ -42,6 +42,7 @@ public class ShopRegisterRequest {
     private Manner manner;
     @Setter
     private List<String> facilities;
+    @Setter
     private String facilityData;
     private Status status;
     private String rejectMessage;

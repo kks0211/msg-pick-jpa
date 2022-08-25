@@ -3,11 +3,12 @@ package com.msgpick.module.shops.service;
 import com.google.common.io.Files;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.programs.mapper.ProgramMapper;
-import com.msgpick.module.shops.dto.ShopDetailResponse;
 import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
-import com.msgpick.module.shops.dto.ShopSummaryResponse;
-import com.msgpick.module.shops.dto.ShopUpdateRequest;
+import com.msgpick.module.shops.dto.request.ShopUpdateRequest;
+import com.msgpick.module.shops.dto.response.ShopDetailResponse;
+import com.msgpick.module.shops.dto.response.ShopSummaryResponse;
 import com.msgpick.module.shops.mapper.ShopMapper;
+import com.msgpick.module.shops.repository.ShopRepository;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.module.therapists.mapper.TherapistMapper;
 import com.msgpick.msgpick.code.Facility;
@@ -33,6 +34,7 @@ import static java.util.stream.Collectors.joining;
 @RequiredArgsConstructor
 public class ShopService {
 
+    private final ShopRepository shopRepository;
     private final ShopMapper shopMapper;
     private final ProgramMapper programMapper;
     private final TherapistMapper therapistMapper;
@@ -53,7 +55,7 @@ public class ShopService {
                 .collect(joining(","));
         requestShop.setFacilityData(facilityData);
 
-        shopMapper.save(requestShop);
+        shopRepository.save(requestShop.toEntity());
 
         //  shopImg
         List<MultipartFile> imgSession = (List<MultipartFile>) SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_IMG_INFO);
