@@ -10,7 +10,7 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                       String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale,
                       HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment,
                       String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette,
-                      ServiceTime serviceTime, Manner manner, String facilities) {
+                      ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage) {
 
     public static ShopDto of(LocalDateTime createdAt,
                              LocalDateTime updatedAt,
@@ -39,8 +39,11 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                              Etiquette etiquette,
                              ServiceTime serviceTime,
                              Manner manner,
-                             String facilities) {
-        return new ShopDto(createdAt, updatedAt, deleted, shopId, partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities);
+                             String facilities,
+                             Status status,
+                             String rejectMessage) {
+
+        return new ShopDto(createdAt, updatedAt, deleted, shopId, partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage);
     }
 
     public static ShopDto of(
@@ -67,8 +70,10 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                              Etiquette etiquette,
                              ServiceTime serviceTime,
                              Manner manner,
-                             String facilities) {
-        return new ShopDto(null, null, null, null, partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities);
+                             String facilities,
+                             Status status,
+                             String rejectMessage) {
+        return new ShopDto(null, null, null, null, partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage);
     }
 
     public static ShopDto from(Shop entity) {
@@ -100,7 +105,9 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                 entity.getEtiquette(),
                 entity.getServiceTime(),
                 entity.getManner(),
-                entity.getFacilities());
+                entity.getFacilities(),
+                entity.getStatus(),
+                entity.getRejectMessage());
     }
 
     public Shop toEntity () {
@@ -128,7 +135,9 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                 etiquette,
                 serviceTime,
                 manner,
-                facilities);
+                facilities,
+                status,
+                rejectMessage);
     }
 
 }

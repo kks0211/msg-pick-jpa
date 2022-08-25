@@ -2,7 +2,7 @@ package com.msgpick;
 
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
-import com.msgpick.module.shops.dto.ShopSummaryResponse;
+import com.msgpick.module.shops.dto.response.ShopSummaryResponse;
 import com.msgpick.msgpick.code.Facility;
 import org.junit.jupiter.api.Test;
 

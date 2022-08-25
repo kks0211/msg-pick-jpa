@@ -1,4 +1,4 @@
-package com.msgpick.module.shops.dto;
+package com.msgpick.module.shops.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

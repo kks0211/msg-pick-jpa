@@ -1,12 +1,16 @@
 package com.msgpick.module.shops.dto.request;
 
+import com.msgpick.module.shops.domain.Shop;
+import com.msgpick.module.shops.dto.ShopDto;
 import com.msgpick.msgpick.code.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShopRegisterRequest {
@@ -38,9 +42,69 @@ public class ShopRegisterRequest {
     private Manner manner;
     @Setter
     private List<String> facilities;
-    @Setter
     private String facilityData;
-    private Double latitude;
-    private Double longitude;
+    private Status status;
+    private String rejectMessage;
+
+//    public ShopDto toDto() {
+//        return ShopDto.of(
+//                partnerId,
+//                type,
+//                name,
+//                businessArea,
+//                howToCome,
+//                homeCareArea,
+//                zonecode,
+//                address,
+//                addressDetail,
+//                contact,
+//                theme,
+//                scale,
+//                homeCareScale,
+//                dayOff,
+//                openAt,
+//                closeAt,
+//                payment,
+//                introduce,
+//                notice,
+//                serviceTarget,
+//                etiquette,
+//                serviceTime,
+//                manner,
+//                status,
+//                rejectMessage
+//        );
+//    }
+
+    public Shop toEntity() {
+        return Shop.of(
+                partnerId,
+                type,
+                name,
+                businessArea,
+                howToCome,
+                homeCareArea,
+                zonecode,
+                address,
+                addressDetail,
+                contact,
+                theme,
+                scale,
+                homeCareScale,
+                dayOff,
+                openAt,
+                closeAt,
+                payment,
+                introduce,
+                notice,
+                serviceTarget,
+                etiquette,
+                serviceTime,
+                manner,
+                facilityData,
+                status,
+                rejectMessage
+        );
+    }
 
 }

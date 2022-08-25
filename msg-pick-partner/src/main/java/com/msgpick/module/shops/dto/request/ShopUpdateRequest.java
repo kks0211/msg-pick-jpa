@@ -1,20 +1,17 @@
-package com.msgpick.module.shops.dto;
+package com.msgpick.module.shops.dto.request;
 
 import com.msgpick.msgpick.code.*;
-import com.msgpick.msgpick.global.entity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShopDetailResponse extends BaseEntity {
+public class ShopUpdateRequest {
+    @Setter
     private Long shopId;
-    private Long partnerId;
     private Type type;
     private String name;
     private String businessArea;
@@ -38,13 +35,10 @@ public class ShopDetailResponse extends BaseEntity {
     private Etiquette etiquette;
     private ServiceTime serviceTime;
     private Manner manner;
+    private List<String> facilities;
     @Setter
-    private List<Facility> facilities;
+    private String facilityData;
     private Double latitude;
     private Double longitude;
-    private Status status;
-    private String facilityData;
-    private String rejectMessage;
-    @Setter
-    private String imgPath;
+
 }
