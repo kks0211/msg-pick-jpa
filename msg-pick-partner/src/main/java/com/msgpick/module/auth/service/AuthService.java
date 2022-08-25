@@ -45,7 +45,7 @@ public class AuthService {
         Auth auth =  authRepository.findByPhone(phoneVerification.phone()).orElseThrow();
 
         if(auth == null) {
-            authRepository.save(auth).isDeleted();
+            authRepository.save(auth);
         } else {
             auth.update(auth);
         }
