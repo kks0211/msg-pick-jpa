@@ -1,8 +1,10 @@
 package com.msgpick.module.auth.domain;
 
-import com.msgpick.module.auth.dto.AuthDto;
 import com.msgpick.msgpick.global.entity.BaseEntity;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -36,7 +38,5 @@ public class Auth extends BaseEntity {
         this.verificationCode = auth.getVerificationCode();
         this.expiredAt = auth.getExpiredAt();
     }
-
-
 
 }

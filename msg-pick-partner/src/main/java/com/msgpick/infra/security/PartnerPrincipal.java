@@ -1,7 +1,10 @@
 package com.msgpick.infra.security;
 
+import com.msgpick.module.partners.domain.Partner;
 import com.msgpick.module.partners.dto.PartnerDto;
 import com.msgpick.msgpick.code.PartnerRole;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,19 +14,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record PartnerPrincipal(
-         Long partnerId,
-         String phone,
-         String email,
-         String password,
-         Collection<? extends GrantedAuthority> authorities
-) implements UserDetails
-{
+        Long id,
+        String phone,
+        String email,
+        String password,
+        Collection<? extends GrantedAuthority> authorities
+) implements UserDetails {
 
-    public static PartnerPrincipal of (Long partnerId, String phone, String email, String password) {
+    public static PartnerPrincipal of (Long id, String phone, String email, String password) {
         Set<PartnerRole> roleTypes = Set.of(PartnerRole.OWNER);
 
         return new PartnerPrincipal(
-                partnerId,
+                id,
                 phone,
                 email,
                 password,
@@ -36,13 +38,12 @@ public record PartnerPrincipal(
 
     public static PartnerPrincipal from(PartnerDto dto) {
         return PartnerPrincipal.of(
-                dto.partnerId(),
+                dto.id(),
                 dto.phone(),
                 dto.email(),
                 dto.password()
         );
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
