@@ -1,10 +1,7 @@
 package com.msgpick.infra.security;
 
-import com.msgpick.module.partners.domain.Partner;
 import com.msgpick.module.partners.dto.PartnerDto;
 import com.msgpick.msgpick.code.PartnerRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

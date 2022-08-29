@@ -1,5 +1,6 @@
 package com.msgpick.module.therapists.controller;
 
+import com.msgpick.infra.security.PartnerPrincipal;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.shops.service.ShopService;
 import com.msgpick.module.therapists.service.TherapistService;
@@ -23,7 +24,7 @@ public class TherapistController {
     private final TherapistService therapistService;
 
     @GetMapping("/register")
-    public String therapistRegisterPage(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) throws Exception {
+    public String therapistRegisterPage(Model model, @AuthenticationPrincipal PartnerPrincipal currentUser) throws Exception {
 
         List<ProgramRegisterRequest> programList = (List<ProgramRegisterRequest>) SessionUtil.getAttribute(SessionUtil.REGISTER_PROGRAM_INFO);
 
@@ -41,8 +42,8 @@ public class TherapistController {
     }
 
     @GetMapping("/modify")
-    public String modifyTherapistPage(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-        var shopInfo = shopService.findShopDetail(currentUser.getPartnerId());
+    public String modifyTherapistPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
+        var shopInfo = shopService.findShopDetail(currentUser.id());
         var therapists = therapistService.findTherapistList(shopInfo.getShopId());
 
         model.addAttribute("shopInfo", shopInfo);

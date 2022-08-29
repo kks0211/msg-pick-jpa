@@ -1,5 +1,6 @@
 package com.msgpick.module.programs.controller;
 
+import com.msgpick.infra.security.PartnerPrincipal;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.programs.service.ProgramService;
 import com.msgpick.module.shops.service.ShopService;
@@ -22,7 +23,7 @@ public class ProgramController {
     private final ProgramService programService;
 
     @GetMapping("/register")
-    public String programRegisterPage(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) throws Exception {
+    public String programRegisterPage(Model model, @AuthenticationPrincipal PartnerPrincipal currentUser) throws Exception {
 
         var shopInfo = SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_INFO);
 
@@ -39,8 +40,8 @@ public class ProgramController {
     }
 
     @GetMapping("/modify")
-    public String programModifyPage(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-        var shopInfo = shopService.findShopDetail(currentUser.getPartnerId());
+    public String programModifyPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
+        var shopInfo = shopService.findShopDetail(currentUser.id());
         var programs = programService.findProgramList(shopInfo.getShopId());
 
         model.addAttribute("shopInfo", shopInfo);

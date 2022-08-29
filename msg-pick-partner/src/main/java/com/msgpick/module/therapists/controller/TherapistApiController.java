@@ -1,5 +1,6 @@
 package com.msgpick.module.therapists.controller;
 
+import com.msgpick.infra.security.PartnerPrincipal;
 import com.msgpick.module.shops.service.ShopService;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.module.therapists.dto.TherapistUpdateRequest;
@@ -22,12 +23,12 @@ public class TherapistApiController {
     private final TherapistService therapistService;
 
     @PostMapping("/register")
-    public CommonResponse registerTherapistApi(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody @Valid List<TherapistRegisterRequest> registerTherapistList) throws Exception {
+    public CommonResponse registerTherapistApi(@AuthenticationPrincipal PartnerPrincipal customUserDetails, @RequestBody @Valid List<TherapistRegisterRequest> registerTherapistList) throws Exception {
 
         var shopSession = SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_INFO);
         var programSession = SessionUtil.getAttribute(SessionUtil.REGISTER_PROGRAM_INFO);
 
-        shopService.entryStore(customUserDetails.getPartnerId(), shopSession, programSession, registerTherapistList);
+        shopService.entryStore(customUserDetails.id(), shopSession, programSession, registerTherapistList);
 
         SessionUtil.removeAttribute(SessionUtil.REGISTER_SHOP_INFO);
         SessionUtil.removeAttribute(SessionUtil.REGISTER_SHOP_IMG_INFO);

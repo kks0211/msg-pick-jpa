@@ -37,7 +37,7 @@ public class ShopController {
     @GetMapping("/register")
     public String shopRegisterPage(Model model, RedirectAttributes rttr, @AuthenticationPrincipal PartnerPrincipal currentUser,
                                    @ModelAttribute("params") TherapistDetailResponse therapistDetailResponse) throws Exception {
-        var shopInfo = shopService.findShopDetail(currentUser.partnerId());
+        var shopInfo = shopService.findShopDetail(currentUser.id());
 
         if (shopInfo != null && shopInfo.getStatus() == Status.REVIEW) {
             return "redirect:/shops/register-complete";
@@ -89,7 +89,7 @@ public class ShopController {
 
     @GetMapping("/register-complete")
     public String registerCompletePage(@AuthenticationPrincipal PartnerPrincipal currentUser) {
-        var shopInfo = shopService.findShopSummary(currentUser.partnerId());
+        var shopInfo = shopService.findShopSummary(currentUser.id());
 
         if (shopInfo != null && shopInfo.getStatus() == Status.REVIEW) {
             return "shops/register-complete";
@@ -100,7 +100,7 @@ public class ShopController {
 
     @GetMapping("/modify")
     public String modifyShopPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
-        var shopInfo = shopService.findShopDetail(currentUser.partnerId());
+        var shopInfo = shopService.findShopDetail(currentUser.id());
 
         model.addAttribute("shopInfo", shopInfo);
         model.addAttribute("types", Type.values());
@@ -120,7 +120,7 @@ public class ShopController {
 
     @GetMapping
     public String shopInfoPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
-        var shopInfo = shopService.findShopDetail(currentUser.partnerId());
+        var shopInfo = shopService.findShopDetail(currentUser.id());
         var programs = programService.findProgramList(shopInfo.getShopId());
         var therapists = therapistService.findTherapistList(shopInfo.getShopId());
 

@@ -3,6 +3,7 @@ package com.msgpick.module.programs.service;
 import com.msgpick.module.programs.dto.ProgramDetailResponse;
 import com.msgpick.module.programs.dto.ProgramUpdateRequest;
 import com.msgpick.module.programs.mapper.ProgramMapper;
+import com.msgpick.module.programs.repository.ProgramRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProgramService {
 
+    private final ProgramRepository programRepository;
     private final ProgramMapper programMapper;
 
     @Transactional(readOnly = true)

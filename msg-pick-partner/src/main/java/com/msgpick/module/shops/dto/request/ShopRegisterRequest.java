@@ -1,7 +1,6 @@
 package com.msgpick.module.shops.dto.request;
 
 import com.msgpick.module.shops.domain.Shop;
-import com.msgpick.module.shops.dto.ShopDto;
 import com.msgpick.msgpick.code.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -104,7 +103,8 @@ public class ShopRegisterRequest {
                 manner,
                 facilityData,
                 status,
-                rejectMessage
+                rejectMessage,
+                null
         );
     }
 

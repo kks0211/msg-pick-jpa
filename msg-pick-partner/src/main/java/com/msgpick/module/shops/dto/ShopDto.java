@@ -81,7 +81,7 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                 entity.getCreatedAt(),
                 entity.getUpdatedAt(),
                 entity.getDeleted(),
-                entity.getShopId(),
+                entity.getId(),
                 entity.getPartnerId(),
                 entity.getType(),
                 entity.getName(),
@@ -137,7 +137,8 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                 manner,
                 facilities,
                 status,
-                rejectMessage);
+                rejectMessage,
+                null);
     }
 
 }

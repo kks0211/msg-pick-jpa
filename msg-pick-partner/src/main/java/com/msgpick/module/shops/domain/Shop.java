@@ -1,12 +1,16 @@
 package com.msgpick.module.shops.domain;
 
 
+import com.google.common.collect.Lists;
+import com.msgpick.module.programs.domain.Program;
+import com.msgpick.module.therapists.domain.Therapist;
 import com.msgpick.msgpick.code.*;
 import com.msgpick.msgpick.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Table(name = "shops")
@@ -56,8 +60,15 @@ public class Shop extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
     private String rejectMessage;
+    private String imgPath;
 
-    public Shop (Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage) {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shop", cascade = CascadeType.ALL)
+    private List<Program> programList = Lists.newArrayList();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shop", cascade = CascadeType.ALL)
+    private List<Therapist> therapistList = Lists.newArrayList();
+
+    public Shop(Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage, String imgPath) {
         this.partnerId = partnerId;
         this.type = type;
         this.name = name;
@@ -84,12 +95,12 @@ public class Shop extends BaseEntity {
         this.facilities = facilities;
         this.status = status;
         this.rejectMessage = rejectMessage;
+        this.imgPath = imgPath;
     }
 
-    public static Shop of (Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage) {
-        return new Shop(partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address,  addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage);
+    public static Shop of(Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage, String imgPath) {
+        return new Shop(partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage, imgPath);
     }
-
 
 
 }

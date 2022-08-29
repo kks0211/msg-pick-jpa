@@ -17,7 +17,7 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String dashboardPage(@AuthenticationPrincipal PartnerPrincipal currentUser) {
 
-        var shopInfo = shopService.findShopSummary(currentUser.partnerId());
+        var shopInfo = shopService.findShopSummary(currentUser.id());
 
         if (shopInfo == null) {
             return "redirect:/shops/register";

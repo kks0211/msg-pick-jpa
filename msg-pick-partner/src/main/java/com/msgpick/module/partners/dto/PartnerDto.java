@@ -33,7 +33,7 @@ public record PartnerDto(
         );
     }
 
-    public static PartnerDetailResponse of(Partner entity) {
+    public PartnerDetailResponse of(Partner entity) {
         return PartnerDetailResponse.builder()
                 .id(entity.getId())
                 .phone(entity.getPhone())

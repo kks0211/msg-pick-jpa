@@ -29,9 +29,10 @@ public class AuthService {
 
     @Transactional
     public void registerPartner(PartnerRegisterRequest request) {
-        request.encodePassword(passwordEncoder);
-        var initPartner = request.toDto();
-        partnerRepository.save(initPartner.toEntity());
+        var initDto = request.toDto();
+        var initEntity = initDto.toEntity();
+        initEntity.encodePassword(passwordEncoder);
+        partnerRepository.save(initEntity);
     }
 
     @Transactional

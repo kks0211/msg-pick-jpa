@@ -1,9 +1,7 @@
 package com.msgpick.module.shops.dto.response;
 
-import com.msgpick.module.shops.domain.Shop;
 import com.msgpick.msgpick.code.*;
 import com.msgpick.msgpick.global.entity.BaseEntity;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -109,36 +107,5 @@ public class ShopDetailResponse extends BaseEntity {
         );
     }
 
-    public static ShopDetailResponse from(Shop entity) {
-        return new ShopDetailResponse(
-                entity.getShopId(),
-                entity.getPartnerId(),
-                entity.getType(),
-                entity.getName(),
-                entity.getBusinessArea(),
-                entity.getHowToCome(),
-                entity.getHomeCareArea(),
-                entity.getZonecode(),
-                entity.getAddress(),
-                entity.getAddressDetail(),
-                entity.getContact(),
-                entity.getTheme(),
-                entity.getScale(),
-                entity.getHomeCareScale(),
-                entity.getDayOff(),
-                entity.getOpenAt(),
-                entity.getCloseAt(),
-                entity.getPayment(),
-                entity.getIntroduce(),
-                entity.getNotice(),
-                entity.getServiceTarget(),
-                entity.getEtiquette(),
-                entity.getServiceTime(),
-                entity.getManner(),
-                entity.getsta()
-
-
-        );
-    }
 
 }
