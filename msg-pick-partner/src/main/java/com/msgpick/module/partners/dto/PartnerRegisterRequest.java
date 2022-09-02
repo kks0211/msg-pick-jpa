@@ -12,6 +12,12 @@ public class PartnerRegisterRequest {
     @Setter
     private String password;
 
+    public PartnerRegisterRequest(String phone, String email, String password) {
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+    }
+
     public PartnerDto toDto() {
         return PartnerDto.of(phone, email, password);
     }
