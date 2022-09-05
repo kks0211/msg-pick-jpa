@@ -17,7 +17,7 @@ public class Program extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "program_id")
     private Long id;
-    private Long shopId;
+
     private String name;
     private Long price;
     private Long discountedPrice;
@@ -27,8 +27,8 @@ public class Program extends BaseEntity {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    public Program(Long shopId, String name, Long price, Long discountedPrice, String description) {
-        this.shopId = shopId;
+    public Program(Shop shop, String name, Long price, Long discountedPrice, String description) {
+        this.shop = shop;
         this.name = name;
         this.price = price;
         this.discountedPrice = discountedPrice;

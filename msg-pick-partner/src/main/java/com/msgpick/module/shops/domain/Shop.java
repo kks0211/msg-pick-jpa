@@ -22,6 +22,7 @@ public class Shop extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shop_id")
     private Long id;
+
     private Long partnerId;
     @Enumerated(EnumType.STRING)
     private Type type;

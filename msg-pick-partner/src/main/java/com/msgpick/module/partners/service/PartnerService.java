@@ -12,7 +12,7 @@ public class PartnerService {
 
 //    @Transactional(readOnly = true)
 //    public PartnerDetailResponse findByPartner(PartnerRegisterRequest request) {
-//        return partnerRepository.findById(request.get)
+//        return partnerRepository.findById(request.getPhone())
 //                .map(PartnerDetailResponse::from)
 //                .orElseThrow(() -> new BaseException(ErrorCode.COMMON_ENTITY_NOT_FOUND));
 //    }

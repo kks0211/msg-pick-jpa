@@ -18,7 +18,7 @@ public class Therapist extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "therapist_id")
     private Long id;
-    private Long shopId;
+
     private String name;
     private String position;
     @Enumerated(EnumType.STRING)
@@ -29,4 +29,11 @@ public class Therapist extends BaseEntity {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+    public Therapist(Shop shop, String name, String position, Nationality nationality, String description) {
+        this.shop = shop;
+        this.name = name;
+        this.position = position;
+        this.nationality = nationality;
+        this.description = description;
+    }
 }
