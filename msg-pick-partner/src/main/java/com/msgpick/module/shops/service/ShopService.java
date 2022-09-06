@@ -8,10 +8,12 @@ import com.msgpick.module.shops.dto.request.ShopUpdateRequest;
 import com.msgpick.module.shops.dto.response.ShopDetailResponse;
 import com.msgpick.module.shops.dto.response.ShopSummaryResponse;
 import com.msgpick.module.shops.mapper.ShopMapper;
+import com.msgpick.module.shops.repository.ShopImgRepository;
 import com.msgpick.module.shops.repository.ShopRepository;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.module.therapists.mapper.TherapistMapper;
 import com.msgpick.msgpick.code.Facility;
+import com.msgpick.msgpick.global.common.exception.EntityNotFoundException;
 import com.msgpick.msgpick.utils.FileUtil;
 import com.msgpick.msgpick.utils.SessionUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,17 +26,20 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
 public class ShopService {
 
     private final ShopRepository shopRepository;
+    private final ShopImgRepository shopImgRepository;
     private final ShopMapper shopMapper;
     private final ProgramMapper programMapper;
     private final TherapistMapper therapistMapper;
@@ -87,25 +92,13 @@ public class ShopService {
     @Transactional(readOnly = true)
     public ShopDetailResponse findShopDetail(Long partnerId) {
 
-        var shopDetail = shopMapper.findByShopDetail(partnerId);
+        //var shopDetail = shopMapper.findByShopDetail(partnerId);
+        var shop = shopRepository.findByPartnerId(partnerId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + partnerId));
 
-        if (shopDetail == null) {
-            return null;
-        }
+        var shopImg = shopImgRepository.findAllById(Collections.singleton(shop.getId()));
 
-        var shopFacility = shopDetail.getFacilityData();
-        List<Facility> shopFacilityList = Arrays.stream(shopFacility.split(","))
-                .map(Facility::valueOf)
-                .collect(Collectors.toList());
-        shopDetail.setFacilities(shopFacilityList);
-
-        var shopImgPathList = shopMapper.findByShopImg(shopDetail.getShopId());
-        String shopImgPath = shopImgPathList.stream()
-                .map(n -> n.getImgPath())
-                .collect(joining(","));
-        shopDetail.setImgPath(shopImgPath);
-
-        return shopDetail;
+        return ShopDetailResponse.toDto(shop, shopImg);
     }
 
     @Transactional(readOnly = true)

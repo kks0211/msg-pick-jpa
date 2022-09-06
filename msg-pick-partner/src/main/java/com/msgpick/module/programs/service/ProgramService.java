@@ -28,13 +28,23 @@ public class ProgramService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int modifyProgram(Long programId, ProgramUpdateRequest program) {
+    public void modifyProgram(Long programId, ProgramUpdateRequest request) {
 
-        if (programId == null) {
-            return programMapper.save(program);
+        var findProgram = programRepository.getReferenceById(programId);
+
+        if (findProgram != null) {
+            findProgram.update(request);
+        } else {
+            programRepository.save(request.toEntity());
         }
-        program.setProgramId(programId);
-        return programMapper.update(program);
+
+
+
+//        if (programId == null) {
+//            return programMapper.save(program);
+//        }
+//        program.setProgramId(programId);
+//        return programMapper.update(program);
     }
 
     @Transactional(readOnly = true)

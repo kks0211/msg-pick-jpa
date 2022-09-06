@@ -42,7 +42,7 @@ public class TherapistApiController {
 
         therapistService.modifyTherapist(therapistId, therapist);
 
-        var modifyTherapistInfo = therapistService.findTherapist(therapist.getTherapistId());
+        var modifyTherapistInfo = therapistService.findTherapist(therapistId);
 
         return CommonResponse.success(modifyTherapistInfo);
 

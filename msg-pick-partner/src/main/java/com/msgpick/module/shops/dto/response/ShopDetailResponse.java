@@ -1,12 +1,18 @@
 package com.msgpick.module.shops.dto.response;
 
+import com.msgpick.module.shops.domain.Shop;
+import com.msgpick.module.shops.domain.ShopImg;
 import com.msgpick.msgpick.code.*;
 import com.msgpick.msgpick.global.entity.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 @Getter
 @NoArgsConstructor
@@ -35,15 +41,13 @@ public class ShopDetailResponse extends BaseEntity {
     private Etiquette etiquette;
     private ServiceTime serviceTime;
     private Manner manner;
-    @Setter
     private List<Facility> facilities;
     private Status status;
-    private String facilityData;
     private String rejectMessage;
-    @Setter
     private String imgPath;
 
-    public ShopDetailResponse(Long shopId, Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, Status status, String facilityData, String rejectMessage, String imgPath) {
+    @Builder
+    public ShopDetailResponse(Long shopId, Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, List<Facility> facilities, Status status, String rejectMessage, String imgPath) {
         this.shopId = shopId;
         this.partnerId = partnerId;
         this.type = type;
@@ -68,43 +72,55 @@ public class ShopDetailResponse extends BaseEntity {
         this.etiquette = etiquette;
         this.serviceTime = serviceTime;
         this.manner = manner;
+        this.facilities = facilities;
         this.status = status;
-        this.facilityData = facilityData;
         this.rejectMessage = rejectMessage;
         this.imgPath = imgPath;
     }
 
-    public static ShopDetailResponse of(Long shopId, Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, Status status, String facilityData, String rejectMessage, String imgPath) {
-        return new ShopDetailResponse(
-                shopId,
-                partnerId,
-                type,
-                name,
-                businessArea,
-                howToCome,
-                homeCareArea,
-                zonecode,
-                address,
-                addressDetail,
-                contact,
-                theme,
-                scale,
-                homeCareScale,
-                dayOff,
-                openAt,
-                closeAt,
-                payment,
-                introduce,
-                notice,
-                serviceTarget,
-                etiquette,
-                serviceTime,
-                manner,
-                status,
-                facilityData,
-                rejectMessage,
-                imgPath
-        );
+    private static List<Facility> convertFacility(String shopFacility) {
+        return Arrays.stream(shopFacility.split(","))
+                .map(Facility::valueOf)
+                .collect(Collectors.toList());
+    }
+
+    private static String convertImgPath(List<ShopImg> shopImgPathList) {
+        return shopImgPathList.stream()
+                .map(n -> n.getImg_path())
+                .collect(joining(","));
+    }
+
+    public static ShopDetailResponse toDto(Shop entity, List<ShopImg> shopImgPathList) {
+        return ShopDetailResponse.builder()
+                .shopId(entity.getId())
+                .partnerId(entity.getPartnerId())
+                .type(entity.getType())
+                .name(entity.getName())
+                .businessArea(entity.getBusinessArea())
+                .howToCome(entity.getHowToCome())
+                .homeCareArea(entity.getHomeCareArea())
+                .zonecode(entity.getZonecode())
+                .address(entity.getAddress())
+                .addressDetail(entity.getAddressDetail())
+                .contact(entity.getContact())
+                .theme(entity.getTheme())
+                .scale(entity.getScale())
+                .homeCareScale(entity.getHomeCareScale())
+                .dayOff(entity.getDayOff())
+                .openAt(entity.getOpenAt())
+                .closeAt(entity.getCloseAt())
+                .payment(entity.getPayment())
+                .introduce(entity.getIntroduce())
+                .notice(entity.getNotice())
+                .etiquette(entity.getEtiquette())
+                .serviceTarget(entity.getServiceTarget())
+                .serviceTime(entity.getServiceTime())
+                .manner(entity.getManner())
+                .facilities(convertFacility(entity.getFacilities()))
+                .status(entity.getStatus())
+                .rejectMessage(entity.getRejectMessage())
+                .imgPath(convertImgPath(shopImgPathList))
+                .build();
     }
 
 

@@ -1,8 +1,10 @@
 package com.msgpick.module.therapists.domain;
 
 import com.msgpick.module.shops.domain.Shop;
+import com.msgpick.module.therapists.dto.TherapistUpdateRequest;
 import com.msgpick.msgpick.code.Nationality;
 import com.msgpick.msgpick.global.entity.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,11 +31,19 @@ public class Therapist extends BaseEntity {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+    @Builder
     public Therapist(Shop shop, String name, String position, Nationality nationality, String description) {
         this.shop = shop;
         this.name = name;
         this.position = position;
         this.nationality = nationality;
         this.description = description;
+    }
+
+    public void update(TherapistUpdateRequest request) {
+        this.name = request.getName();
+        this.position = request.getPosition();
+        this.nationality = request.getNationality();
+        this.description = request.getDescription();
     }
 }

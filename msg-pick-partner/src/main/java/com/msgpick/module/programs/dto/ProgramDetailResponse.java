@@ -9,17 +9,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ProgramDetailResponse extends BaseEntity {
-    private Long programId;
-    private Long shopId;
+    private Long id;
     private String name;
     private Long price;
     private Long discountedPrice;
     private String description;
 
     @Builder
-    public ProgramDetailResponse(Long programId, Long shopId, String name, Long price, Long discountedPrice, String description) {
-        this.programId = programId;
-        this.shopId = shopId;
+    public ProgramDetailResponse(Long id, String name, Long price, Long discountedPrice, String description) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.discountedPrice = discountedPrice;
@@ -28,8 +26,7 @@ public class ProgramDetailResponse extends BaseEntity {
 
     public static ProgramDetailResponse toDto(Program entity) {
         return ProgramDetailResponse.builder()
-                .programId(entity.getId())
-                .shopId(entity.getShop().getId())
+                .id(entity.getId())
                 .name(entity.getName())
                 .price(entity.getPrice())
                 .discountedPrice(entity.getDiscountedPrice())
