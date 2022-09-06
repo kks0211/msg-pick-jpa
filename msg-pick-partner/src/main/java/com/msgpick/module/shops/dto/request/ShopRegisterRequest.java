@@ -1,19 +1,24 @@
 package com.msgpick.module.shops.dto.request;
 
+import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.shops.domain.Shop;
+import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.msgpick.code.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShopRegisterRequest {
-    private Long shopId;
     @Setter
     private Long partnerId;
     private Type type;
@@ -39,44 +44,19 @@ public class ShopRegisterRequest {
     private Etiquette etiquette;
     private ServiceTime serviceTime;
     private Manner manner;
-    @Setter
     private List<String> facilities;
-    @Setter
-    private String facilityData;
     private Status status;
     private String rejectMessage;
 
-//    public ShopDto toDto() {
-//        return ShopDto.of(
-//                partnerId,
-//                type,
-//                name,
-//                businessArea,
-//                howToCome,
-//                homeCareArea,
-//                zonecode,
-//                address,
-//                addressDetail,
-//                contact,
-//                theme,
-//                scale,
-//                homeCareScale,
-//                dayOff,
-//                openAt,
-//                closeAt,
-//                payment,
-//                introduce,
-//                notice,
-//                serviceTarget,
-//                etiquette,
-//                serviceTime,
-//                manner,
-//                status,
-//                rejectMessage
-//        );
-//    }
+    private List<ProgramRegisterRequest> programList;
+    private List<TherapistRegisterRequest> therapistList;
 
-    public Shop toEntity() {
+    private static String convertFacility(List<String> request) {
+        return request.stream()
+                .collect(joining(","));
+    }
+
+    public Shop toEntity(Long partnerId) {
         return Shop.of(
                 partnerId,
                 type,
@@ -101,7 +81,7 @@ public class ShopRegisterRequest {
                 etiquette,
                 serviceTime,
                 manner,
-                facilityData,
+                convertFacility(facilities),
                 status,
                 rejectMessage,
                 null

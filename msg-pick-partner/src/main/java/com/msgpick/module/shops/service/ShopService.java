@@ -2,6 +2,7 @@ package com.msgpick.module.shops.service;
 
 import com.google.common.io.Files;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
+import com.msgpick.module.programs.repository.ProgramRepository;
 import com.msgpick.module.shops.domain.ShopImg;
 import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
 import com.msgpick.module.shops.dto.request.ShopUpdateRequest;
@@ -10,6 +11,7 @@ import com.msgpick.module.shops.dto.response.ShopSummaryResponse;
 import com.msgpick.module.shops.repository.ShopImgRepository;
 import com.msgpick.module.shops.repository.ShopRepository;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
+import com.msgpick.module.therapists.repository.TherapistRepository;
 import com.msgpick.msgpick.global.common.exception.EntityNotFoundException;
 import com.msgpick.msgpick.utils.FileUtil;
 import com.msgpick.msgpick.utils.SessionUtil;
@@ -27,14 +29,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.joining;
-
 @Service
 @RequiredArgsConstructor
 public class ShopService {
 
     private final ShopRepository shopRepository;
     private final ShopImgRepository shopImgRepository;
+    private final ProgramRepository programRepository;
+    private final TherapistRepository therapistRepository;
 
     @Value("${file.upload-path}")
     private String FILE_UPLOAD_PATH;
@@ -45,39 +47,29 @@ public class ShopService {
 
         //  shop
         ShopRegisterRequest requestShop = (ShopRegisterRequest) shopSession;
-        requestShop.setPartnerId(partnerId);
-
-        String facilityData = requestShop.getFacilities()
-                .stream()
-                .collect(joining(","));
-        requestShop.setFacilityData(facilityData);
-
-        shopRepository.save(requestShop.toEntity());
+        var shopId = shopRepository.save(requestShop.toEntity(partnerId)).getId();
 
         //  shopImg
         List<MultipartFile> imgSession = (List<MultipartFile>) SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_IMG_INFO);
         if (imgSession.size() > 0) {
-            shopImg(requestShop.getShopId(), imgSession);
+            shopImg(shopId, imgSession);
         }
 
         //  program
         List<ProgramRegisterRequest> requestProgram = (List<ProgramRegisterRequest>) programSession;
         var ofProgram = requestProgram.stream()
-                .map(program -> {
-                    program.setShopId(requestShop.getShopId());
-                    return program;
-                }).collect(Collectors.toList());
+                .map(program -> program.toEntity())
+                .collect(Collectors.toList());
 
-        programMapper.saveAll(ofProgram);
+        programRepository.saveAll(ofProgram);
+
 
         //  Therapist
         var ofTherapist = registerTherapistList.stream()
-                .map(Therapist -> {
-                    Therapist.setShopId(requestShop.getShopId());
-                    return Therapist;
-                }).collect(Collectors.toList());
+                .map(Therapist -> Therapist.toEntity())
+                .collect(Collectors.toList());
 
-        therapistMapper.saveAll(ofTherapist);
+        therapistRepository.saveAll(ofTherapist);
 
     }
 

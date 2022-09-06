@@ -1,5 +1,6 @@
 package com.msgpick.module.programs.dto;
 
+import com.msgpick.module.programs.domain.Program;
 import lombok.*;
 
 @Getter
@@ -7,10 +8,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProgramRegisterRequest {
-    @Setter
-    private Long shopId;
+
     private String name;
     private Long price;
     private Long discountedPrice;
     private String description;
+
+    public Program toEntity() {
+        return Program.builder()
+                .name(name)
+                .price(price)
+                .discountedPrice(discountedPrice)
+                .description(description)
+                .build();
+    }
 }
