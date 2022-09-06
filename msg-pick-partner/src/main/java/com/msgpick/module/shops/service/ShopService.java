@@ -2,17 +2,14 @@ package com.msgpick.module.shops.service;
 
 import com.google.common.io.Files;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
-import com.msgpick.module.programs.mapper.ProgramMapper;
+import com.msgpick.module.shops.domain.ShopImg;
 import com.msgpick.module.shops.dto.request.ShopRegisterRequest;
 import com.msgpick.module.shops.dto.request.ShopUpdateRequest;
 import com.msgpick.module.shops.dto.response.ShopDetailResponse;
 import com.msgpick.module.shops.dto.response.ShopSummaryResponse;
-import com.msgpick.module.shops.mapper.ShopMapper;
 import com.msgpick.module.shops.repository.ShopImgRepository;
 import com.msgpick.module.shops.repository.ShopRepository;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
-import com.msgpick.module.therapists.mapper.TherapistMapper;
-import com.msgpick.msgpick.code.Facility;
 import com.msgpick.msgpick.global.common.exception.EntityNotFoundException;
 import com.msgpick.msgpick.utils.FileUtil;
 import com.msgpick.msgpick.utils.SessionUtil;
@@ -25,14 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +35,6 @@ public class ShopService {
 
     private final ShopRepository shopRepository;
     private final ShopImgRepository shopImgRepository;
-    private final ShopMapper shopMapper;
-    private final ProgramMapper programMapper;
-    private final TherapistMapper therapistMapper;
 
     @Value("${file.upload-path}")
     private String FILE_UPLOAD_PATH;
@@ -114,45 +106,38 @@ public class ShopService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int modifyShop(Long shopId, ShopUpdateRequest request, List<MultipartFile> updateImg) {
+    public void modifyShop(Long shopId, ShopUpdateRequest request, List<MultipartFile> updateImg) {
 
-        var checkImg = shopMapper.findByShopImg(shopId);
+        var checkImg = shopImgRepository.findAllById(Collections.singleton(shopId));
+
         if (checkImg.size() > 0) {
-            shopMapper.deleteImg(shopId);
+            shopImgRepository.deleteById(shopId);
+            //shopMapper.deleteImg(shopId);
         }
 
         if (updateImg.size() > 0) {
             shopImg(shopId, updateImg);
         }
 
-        String facilityData = request.getFacilities()
-                .stream()
-                .collect(joining(","));
-        request.setFacilityData(facilityData);
+        var findShop = shopRepository.getReferenceById(shopId);
 
-        request.setShopId(shopId);
+        if (findShop != null) {
+            findShop.update(request);
+        }
 
-        return shopMapper.update(request);
+        //return shopMapper.update(request);
     }
 
     @Transactional(readOnly = true)
     public ShopDetailResponse findModifyShop(Long shopId) {
 
-        var result = shopMapper.findByUpdateShop(shopId);
-        var shopFacility = result.getFacilityData();
-        List<Facility> shopFacilityList = Arrays.stream(shopFacility.split(","))
-                .map(Facility::valueOf)
-                .collect(Collectors.toList());
-        result.setFacilities(shopFacilityList);
+        var shop = shopRepository.findById(shopId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + shopId));
 
-        var shopImgPathList = shopMapper.findByShopImg(shopId);
+        var shopImg = shopImgRepository.findAllById(Collections.singleton(shop.getId()));
 
-        String shopImgPath = shopImgPathList.stream()
-                .map(n -> n.getImgPath())
-                .collect(joining(","));
-        result.setImgPath(shopImgPath);
+        return ShopDetailResponse.toDto(shop, shopImg);
 
-        return result;
     }
 
     public void shopImg(Long shopId, List<MultipartFile> img) {
@@ -170,7 +155,13 @@ public class ShopService {
                         throw new RuntimeException(e);
                     }
                     return path;
-                }).forEach(s -> shopMapper.saveImg(shopId, imgPath + s));
+                }).forEach(s ->
+                        shopImgRepository.save(
+                                ShopImg.builder()
+                                        .id(shopId)
+                                        .img_path(imgPath + s)
+                                        .build()));
+        //}).forEach(s -> shopMapper.saveImg(shopId, imgPath + s));
     }
 
 }

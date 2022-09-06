@@ -1,7 +1,10 @@
 package com.msgpick.module.shops.dto.request;
 
 import com.msgpick.msgpick.code.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -10,8 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShopUpdateRequest {
-    @Setter
-    private Long shopId;
+
     private Type type;
     private String name;
     private String businessArea;
@@ -36,9 +38,35 @@ public class ShopUpdateRequest {
     private ServiceTime serviceTime;
     private Manner manner;
     private List<String> facilities;
-    @Setter
-    private String facilityData;
-    private Double latitude;
-    private Double longitude;
+
+
+
+    /*public Shop toEntity() {
+        return Shop.builder()
+                .type(type)
+                .name(name)
+                .businessArea(businessArea)
+                .howToCome(howToCome)
+                .homeCareArea(homeCareArea)
+                .zonecode(zonecode)
+                .address(address)
+                .addressDetail(addressDetail)
+                .contact(contact)
+                .theme(theme)
+                .scale(scale)
+                .homeCareScale(homeCareScale)
+                .dayOff(dayOff)
+                .openAt(openAt)
+                .closeAt(closeAt)
+                .payment(payment)
+                .introduce(introduce)
+                .notice(notice)
+                .etiquette(etiquette)
+                .serviceTarget(serviceTarget)
+                .serviceTime(serviceTime)
+                .manner(manner)
+                .facilities(convertFacility(facilities))
+                .build();
+    }*/
 
 }

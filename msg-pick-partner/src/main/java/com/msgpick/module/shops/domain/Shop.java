@@ -3,14 +3,18 @@ package com.msgpick.module.shops.domain;
 
 import com.google.common.collect.Lists;
 import com.msgpick.module.programs.domain.Program;
+import com.msgpick.module.shops.dto.request.ShopUpdateRequest;
 import com.msgpick.module.therapists.domain.Therapist;
 import com.msgpick.msgpick.code.*;
 import com.msgpick.msgpick.global.entity.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+
+import static java.util.stream.Collectors.joining;
 
 @Getter
 @Table(name = "shops")
@@ -69,6 +73,7 @@ public class Shop extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "shop", cascade = CascadeType.ALL)
     private List<Therapist> therapistList = Lists.newArrayList();
 
+    @Builder
     public Shop(Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage, String imgPath) {
         this.partnerId = partnerId;
         this.type = type;
@@ -103,5 +108,35 @@ public class Shop extends BaseEntity {
         return new Shop(partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage, imgPath);
     }
 
+    private static String convertFacility(List<String> request) {
+        return request.stream()
+                .collect(joining(","));
+    }
+
+    public void update(ShopUpdateRequest request) {
+        this.type = request.getType();
+        this.name = request.getName();
+        this.businessArea = request.getBusinessArea();
+        this.howToCome = request.getHowToCome();
+        this.homeCareArea = request.getHomeCareArea();
+        this.zonecode = request.getZonecode();
+        this.address = request.getAddress();
+        this.addressDetail = request.getAddressDetail();
+        this.contact = request.getContact();
+        this.theme = request.getTheme();
+        this.scale = request.getScale();
+        this.homeCareScale = request.getHomeCareScale();
+        this.dayOff = request.getDayOff();
+        this.openAt = request.getOpenAt();
+        this.closeAt = request.getCloseAt();
+        this.payment = request.getPayment();
+        this.introduce = request.getIntroduce();
+        this.notice = request.getNotice();
+        this.serviceTarget = request.getServiceTarget();
+        this.etiquette = request.getEtiquette();
+        this.serviceTime = request.getServiceTime();
+        this.manner = request.getManner();
+        this.facilities = convertFacility(request.getFacilities());
+    }
 
 }

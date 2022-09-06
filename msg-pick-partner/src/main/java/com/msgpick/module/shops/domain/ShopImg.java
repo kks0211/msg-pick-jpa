@@ -1,6 +1,7 @@
 package com.msgpick.module.shops.domain;
 
 import com.msgpick.msgpick.global.entity.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +22,9 @@ public class ShopImg extends BaseEntity {
 
     private String img_path;
 
-    public ShopImg(String img_path) {
+    @Builder
+    public ShopImg(Long id, String img_path) {
+        this.id = id;
         this.img_path = img_path;
     }
 }
