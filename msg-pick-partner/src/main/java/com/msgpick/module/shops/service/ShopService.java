@@ -96,13 +96,9 @@ public class ShopService {
     @Transactional(readOnly = true)
     public ShopSummaryResponse findShopSummary(Long partnerId) {
 
-        var shopSummary = shopMapper.findByShopSummary(partnerId);
-
-        if (shopSummary == null) {
-            return null;
-        }
-
-        return shopSummary;
+        return shopRepository.findByPartnerId(partnerId)
+                .map(ShopSummaryResponse::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("해당 샵 정보가 없습니다 : " + partnerId));
     }
 
     @Transactional(rollbackFor = Exception.class)
