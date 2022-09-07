@@ -12,8 +12,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      #location: /Users/kwanseokkim/dev/upload/tmp
-      location: C:/upload/tmp
+      location: /Users/kwanseokkim/dev/upload/tmp
+      #location: C:/upload/tmp
       file-size-threshold: 10MB
   config:
     activate:
@@ -34,12 +34,14 @@ spring:
     username: massage
     password: massage
   jpa:
+    open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: create
     properties:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
+
   thymeleaf:
     prefix: classpath:templates/
     check-template-location: true
@@ -48,13 +50,9 @@ spring:
     cache: false
     template-resolver-order: 0
 
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-
 file:
-  #upload-path: /Users/kwanseokkim/dev/upload
-  upload-path: C:/upload
+  upload-path: /Users/kwanseokkim/dev/upload
+  #upload-path: C:/upload
 
 
 ---

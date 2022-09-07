@@ -5,6 +5,7 @@ import com.msgpick.msgpick.code.PartnerRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.Set;
@@ -18,7 +19,7 @@ public record PartnerPrincipal(
         Collection<? extends GrantedAuthority> authorities
 ) implements UserDetails {
 
-    public static PartnerPrincipal of (Long id, String phone, String email, String password) {
+    public static PartnerPrincipal of(Long id, String phone, String email, String password) {
         Set<PartnerRole> roleTypes = Set.of(PartnerRole.OWNER);
 
         return new PartnerPrincipal(

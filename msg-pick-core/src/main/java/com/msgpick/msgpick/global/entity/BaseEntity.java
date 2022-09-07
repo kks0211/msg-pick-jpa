@@ -28,7 +28,6 @@ public class BaseEntity {
     @Column(nullable = false)
     private LocalDateTime updatedAt; // 수정일시
 
-    @Column(columnDefinition = "boolean default 'false'")
-    private Boolean deleted;
+    private Boolean deleted = false;
 
 }

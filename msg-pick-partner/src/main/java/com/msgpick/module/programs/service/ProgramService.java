@@ -2,7 +2,6 @@ package com.msgpick.module.programs.service;
 
 import com.msgpick.module.programs.dto.ProgramDetailResponse;
 import com.msgpick.module.programs.dto.ProgramUpdateRequest;
-import com.msgpick.module.programs.mapper.ProgramMapper;
 import com.msgpick.module.programs.repository.ProgramRepository;
 import com.msgpick.msgpick.global.common.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 public class ProgramService {
 
     private final ProgramRepository programRepository;
-    private final ProgramMapper programMapper;
 
     @Transactional(readOnly = true)
     public List<ProgramDetailResponse> findProgramList(Long shopId) {
@@ -37,7 +35,6 @@ public class ProgramService {
         } else {
             programRepository.save(request.toEntity());
         }
-
 
 
 //        if (programId == null) {

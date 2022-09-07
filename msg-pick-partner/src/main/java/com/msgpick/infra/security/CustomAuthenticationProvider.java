@@ -24,16 +24,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String phone = authentication.getName();
         String password = (String) authentication.getCredentials();
 
-        /*CustomUserDetails customUserDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(phone);
+        PartnerPrincipal customUserDetails = (PartnerPrincipal) userDetailsService.loadUserByUsername(phone);
 
         if (!passwordEncoder.matches(password, customUserDetails.getPassword())) {
             throw new BadCredentialsException(ErrorCode.EMAIL_PASSWORD_INVALID.getErrorMsg());
-        }*/
+        }
 
-        /*UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUserDetails, password, null);
-        return authenticationToken;*/
-
-        return null;
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUserDetails, password, null);
+        return authenticationToken;
     }
 
     @Override

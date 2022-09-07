@@ -48,9 +48,6 @@ public class ShopRegisterRequest {
     private Status status;
     private String rejectMessage;
 
-    private List<ProgramRegisterRequest> programList;
-    private List<TherapistRegisterRequest> therapistList;
-
     private static String convertFacility(List<String> request) {
         return request.stream()
                 .collect(joining(","));

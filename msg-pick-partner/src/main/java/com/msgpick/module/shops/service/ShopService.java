@@ -77,20 +77,34 @@ public class ShopService {
     public ShopDetailResponse findShopDetail(Long partnerId) {
 
         //var shopDetail = shopMapper.findByShopDetail(partnerId);
-        var shop = shopRepository.findByPartnerId(partnerId)
-                .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + partnerId));
+        var shopYN = shopRepository.findByPartnerId(partnerId).isPresent();
 
-        var shopImg = shopImgRepository.findAllById(Collections.singleton(shop.getId()));
+        if (shopYN) {
+            var shop = shopRepository.findByPartnerId(partnerId)
+                    .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + partnerId));
 
-        return ShopDetailResponse.toDto(shop, shopImg);
+            var shopImg = shopImgRepository.findAllById(Collections.singleton(shop.getId()));
+
+            return ShopDetailResponse.toDto(shop, shopImg);
+        } else {
+            return null;
+        }
     }
 
     @Transactional(readOnly = true)
     public ShopSummaryResponse findShopSummary(Long partnerId) {
-
-        return shopRepository.findByPartnerId(partnerId)
+        var result = shopRepository.findByPartnerId(partnerId)
                 .map(ShopSummaryResponse::toDto)
-                .orElseThrow(() -> new EntityNotFoundException("해당 샵 정보가 없습니다 : " + partnerId));
+                .isPresent();
+
+        if (!result) {
+            return null;
+        } else {
+            return shopRepository.findByPartnerId(partnerId)
+                    .map(ShopSummaryResponse::toDto)
+                    .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + partnerId));
+        }
+
     }
 
     @Transactional(rollbackFor = Exception.class)

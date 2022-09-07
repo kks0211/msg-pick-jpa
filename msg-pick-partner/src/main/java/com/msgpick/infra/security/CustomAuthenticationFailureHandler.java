@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.msgpick.msgpick.global.common.response.ErrorCode.EMAIL_PASSWORD_INVALID;
+import static com.msgpick.msgpick.global.common.response.ErrorCode.PHONE_PASSWORD_CONFIRM_NOT_MATCHED;
 
 @Component
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
@@ -23,7 +23,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         ObjectMapper objectMapper = new ObjectMapper();
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        objectMapper.writeValue(response.getWriter(), CommonResponse.fail(EMAIL_PASSWORD_INVALID));
+        objectMapper.writeValue(response.getWriter(), CommonResponse.fail(PHONE_PASSWORD_CONFIRM_NOT_MATCHED));
 
     }
 }

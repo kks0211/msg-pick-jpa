@@ -4,6 +4,7 @@ import com.msgpick.module.auth.domain.Auth;
 import com.msgpick.module.auth.dto.AuthCheckVerifiedRequest;
 import com.msgpick.module.auth.dto.AuthVerifiedRequest;
 import com.msgpick.module.auth.repository.AuthRepository;
+import com.msgpick.module.partners.domain.Partner;
 import com.msgpick.module.partners.dto.PartnerRegisterRequest;
 import com.msgpick.module.partners.repository.PartnerRepository;
 import com.msgpick.msgpick.global.common.exception.BaseException;
@@ -38,17 +39,18 @@ public class AuthService {
     @Transactional
     public void registerAuth(AuthVerifiedRequest request) {
         var byPhoneNumber = partnerRepository.findByPhone(request.getPhone());
-        if (byPhoneNumber != null) {
+
+        if (!byPhoneNumber.map(Partner::getPhone).isEmpty()) {
             throw new BaseException(ErrorCode.PHONE_ALREADY_USED);
         }
 
         var phoneVerification = request.toPhoneVerification();
-        Auth auth = authRepository.findByPhone(phoneVerification.getPhone()).orElseThrow();
+        var auth = authRepository.findByPhone(phoneVerification.getPhone());
 
-        if (auth == null) {
-            authRepository.save(auth);
+        if (auth.isEmpty()) {
+            authRepository.save(phoneVerification.toEntity());
         } else {
-            auth.update(auth);
+            auth.get().update(phoneVerification.toEntity());
         }
     }
 

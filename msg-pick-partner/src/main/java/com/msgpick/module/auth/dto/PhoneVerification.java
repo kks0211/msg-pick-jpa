@@ -1,5 +1,6 @@
 package com.msgpick.module.auth.dto;
 
+import com.msgpick.module.auth.domain.Auth;
 import com.msgpick.msgpick.global.common.exception.BaseException;
 import com.msgpick.msgpick.global.common.response.ErrorCode;
 import com.msgpick.msgpick.global.entity.BaseEntity;
@@ -27,6 +28,15 @@ public class PhoneVerification extends BaseEntity {
         this.phone = phone;
         this.verificationCode = VerificationCodeGenerator.randomNumber();
         this.expiredAt = LocalDateTime.now().plusMinutes(EXPIRED_MINUTES);
+    }
+
+    public Auth toEntity() {
+        return Auth.builder()
+                .phone(phone)
+                .verificationCode(VerificationCodeGenerator.randomNumber())
+                .expiredAt(LocalDateTime.now().plusMinutes(EXPIRED_MINUTES))
+                .verifiedAt(LocalDateTime.now())
+                .build();
     }
 
     public void checkExpired() {

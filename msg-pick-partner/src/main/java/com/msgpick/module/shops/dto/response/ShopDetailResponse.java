@@ -1,7 +1,9 @@
 package com.msgpick.module.shops.dto.response;
 
+import com.msgpick.module.programs.dto.ProgramDetailResponse;
 import com.msgpick.module.shops.domain.Shop;
 import com.msgpick.module.shops.domain.ShopImg;
+import com.msgpick.module.therapists.dto.TherapistDetailResponse;
 import com.msgpick.msgpick.code.*;
 import com.msgpick.msgpick.global.entity.BaseEntity;
 import lombok.Builder;
@@ -46,8 +48,11 @@ public class ShopDetailResponse extends BaseEntity {
     private String rejectMessage;
     private String imgPath;
 
+    private List<ProgramDetailResponse> programList;
+    private List<TherapistDetailResponse> therapistList;
+
     @Builder
-    public ShopDetailResponse(Long shopId, Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, List<Facility> facilities, Status status, String rejectMessage, String imgPath) {
+    public ShopDetailResponse(Long shopId, Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, List<Facility> facilities, Status status, String rejectMessage, String imgPath, List<ProgramDetailResponse> programList, List<TherapistDetailResponse> therapistList) {
         this.shopId = shopId;
         this.partnerId = partnerId;
         this.type = type;
@@ -76,6 +81,8 @@ public class ShopDetailResponse extends BaseEntity {
         this.status = status;
         this.rejectMessage = rejectMessage;
         this.imgPath = imgPath;
+        this.programList = programList;
+        this.therapistList = therapistList;
     }
 
     private static List<Facility> convertFacility(String shopFacility) {
@@ -120,6 +127,8 @@ public class ShopDetailResponse extends BaseEntity {
                 .status(entity.getStatus())
                 .rejectMessage(entity.getRejectMessage())
                 .imgPath(convertImgPath(shopImgPathList))
+                .programList(entity.getProgramList())
+                .therapistList(entity.getTherapistList())
                 .build();
     }
 
