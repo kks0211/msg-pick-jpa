@@ -1,16 +1,19 @@
 package com.msgpick.module.shops.dto.response;
 
+import com.msgpick.module.programs.domain.Program;
 import com.msgpick.module.programs.dto.ProgramDetailResponse;
 import com.msgpick.module.shops.domain.Shop;
 import com.msgpick.module.shops.domain.ShopImg;
-import com.msgpick.module.therapists.dto.TherapistDetailResponse;
+import com.msgpick.module.therapists.domain.Therapist;
 import com.msgpick.msgpick.code.*;
 import com.msgpick.msgpick.global.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,10 +52,39 @@ public class ShopDetailResponse extends BaseEntity {
     private String imgPath;
 
     private List<ProgramDetailResponse> programList;
-    private List<TherapistDetailResponse> therapistList;
+    private List<Therapist> therapistList;
 
     @Builder
-    public ShopDetailResponse(Long shopId, Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, List<Facility> facilities, Status status, String rejectMessage, String imgPath, List<ProgramDetailResponse> programList, List<TherapistDetailResponse> therapistList) {
+    public ShopDetailResponse(Long shopId,
+                              Long partnerId,
+                              Type type,
+                              String name,
+                              String businessArea,
+                              String howToCome,
+                              String homeCareArea,
+                              String zonecode,
+                              String address,
+                              String addressDetail,
+                              String contact,
+                              Theme theme,
+                              Scale scale,
+                              HomeCareScale homeCareScale,
+                              DayOff dayOff,
+                              String openAt,
+                              String closeAt,
+                              Payment payment,
+                              String introduce,
+                              String notice,
+                              ServiceTarget serviceTarget,
+                              Etiquette etiquette,
+                              ServiceTime serviceTime,
+                              Manner manner,
+                              List<Facility> facilities,
+                              Status status,
+                              String rejectMessage,
+                              String imgPath,
+                              List<ProgramDetailResponse> programList,
+                              List<Therapist> therapistList) {
         this.shopId = shopId;
         this.partnerId = partnerId;
         this.type = type;
@@ -86,15 +118,56 @@ public class ShopDetailResponse extends BaseEntity {
     }
 
     private static List<Facility> convertFacility(String shopFacility) {
+        if (StringUtils.isEmpty(shopFacility)) {
+            return Collections.emptyList();
+        }
         return Arrays.stream(shopFacility.split(","))
                 .map(Facility::valueOf)
                 .collect(Collectors.toList());
     }
 
     private static String convertImgPath(List<ShopImg> shopImgPathList) {
+        if (shopImgPathList.isEmpty()) {
+            return "";
+        }
         return shopImgPathList.stream()
                 .map(n -> n.getImg_path())
                 .collect(joining(","));
+    }
+
+    public static ShopDetailResponse toDto(Shop entity, List<ProgramDetailResponse> programInfo, List<Therapist> therapistInfo, List<ShopImg> shopImgPathList) {
+        return ShopDetailResponse.builder()
+                .shopId(entity.getId())
+                .partnerId(entity.getPartnerId())
+                .type(entity.getType())
+                .name(entity.getName())
+                .businessArea(entity.getBusinessArea())
+                .howToCome(entity.getHowToCome())
+                .homeCareArea(entity.getHomeCareArea())
+                .zonecode(entity.getZonecode())
+                .address(entity.getAddress())
+                .addressDetail(entity.getAddressDetail())
+                .contact(entity.getContact())
+                .theme(entity.getTheme())
+                .scale(entity.getScale())
+                .homeCareScale(entity.getHomeCareScale())
+                .dayOff(entity.getDayOff())
+                .openAt(entity.getOpenAt())
+                .closeAt(entity.getCloseAt())
+                .payment(entity.getPayment())
+                .introduce(entity.getIntroduce())
+                .notice(entity.getNotice())
+                .etiquette(entity.getEtiquette())
+                .serviceTarget(entity.getServiceTarget())
+                .serviceTime(entity.getServiceTime())
+                .manner(entity.getManner())
+                .facilities(convertFacility(entity.getFacilities()))
+                .status(entity.getStatus())
+                .rejectMessage(entity.getRejectMessage())
+                .imgPath(convertImgPath(shopImgPathList))
+                .programList(programInfo)
+                .therapistList(therapistInfo)
+                .build();
     }
 
     public static ShopDetailResponse toDto(Shop entity, List<ShopImg> shopImgPathList) {
@@ -127,10 +200,7 @@ public class ShopDetailResponse extends BaseEntity {
                 .status(entity.getStatus())
                 .rejectMessage(entity.getRejectMessage())
                 .imgPath(convertImgPath(shopImgPathList))
-                .programList(entity.getProgramList())
-                .therapistList(entity.getTherapistList())
                 .build();
     }
-
 
 }

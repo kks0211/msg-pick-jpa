@@ -1,6 +1,7 @@
 package com.msgpick.module.shops.service;
 
 import com.google.common.io.Files;
+import com.msgpick.module.programs.dto.ProgramDetailResponse;
 import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.programs.repository.ProgramRepository;
 import com.msgpick.module.shops.domain.ShopImg;
@@ -83,9 +84,13 @@ public class ShopService {
             var shop = shopRepository.findByPartnerId(partnerId)
                     .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + partnerId));
 
-            var shopImg = shopImgRepository.findAllById(Collections.singleton(shop.getId()));
+            var shopImg = shopImgRepository.findAllByShopId(shop.getId());
 
-            return ShopDetailResponse.toDto(shop, shopImg);
+            var programInfo = shop.getProgramList().stream().map(ProgramDetailResponse::toDto).collect(Collectors.toList());
+
+            var therapistInfo = shop.getTherapistList();
+
+            return ShopDetailResponse.toDto(shop, programInfo, therapistInfo, shopImg);
         } else {
             return null;
         }
@@ -160,7 +165,7 @@ public class ShopService {
                 }).forEach(s ->
                         shopImgRepository.save(
                                 ShopImg.builder()
-                                        .id(shopId)
+                                        .shopId(shopId)
                                         .img_path(imgPath + s)
                                         .build()));
         //}).forEach(s -> shopMapper.saveImg(shopId, imgPath + s));

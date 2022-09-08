@@ -137,8 +137,7 @@ public record ShopDto(LocalDateTime createdAt, LocalDateTime updatedAt, Boolean 
                 manner,
                 facilities,
                 status,
-                rejectMessage,
-                null);
+                rejectMessage);
     }
 
 }

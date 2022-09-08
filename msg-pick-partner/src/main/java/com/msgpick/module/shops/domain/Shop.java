@@ -65,7 +65,6 @@ public class Shop extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
     private String rejectMessage;
-    private String imgPath;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "shop", cascade = CascadeType.ALL)
     private List<Program> programList = Lists.newArrayList();
@@ -74,7 +73,7 @@ public class Shop extends BaseEntity {
     private List<Therapist> therapistList = Lists.newArrayList();
 
     @Builder
-    public Shop(Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage, String imgPath) {
+    public Shop(Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage) {
         this.partnerId = partnerId;
         this.type = type;
         this.name = name;
@@ -101,11 +100,10 @@ public class Shop extends BaseEntity {
         this.facilities = facilities;
         this.status = status;
         this.rejectMessage = rejectMessage;
-        this.imgPath = imgPath;
     }
 
-    public static Shop of(Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage, String imgPath) {
-        return new Shop(partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage, imgPath);
+    public static Shop of(Long partnerId, Type type, String name, String businessArea, String howToCome, String homeCareArea, String zonecode, String address, String addressDetail, String contact, Theme theme, Scale scale, HomeCareScale homeCareScale, DayOff dayOff, String openAt, String closeAt, Payment payment, String introduce, String notice, ServiceTarget serviceTarget, Etiquette etiquette, ServiceTime serviceTime, Manner manner, String facilities, Status status, String rejectMessage) {
+        return new Shop(partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage);
     }
 
     private static String convertFacility(List<String> request) {

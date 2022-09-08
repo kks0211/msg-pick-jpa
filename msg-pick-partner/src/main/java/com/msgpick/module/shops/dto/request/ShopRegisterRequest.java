@@ -80,8 +80,7 @@ public class ShopRegisterRequest {
                 manner,
                 convertFacility(facilities),
                 status,
-                rejectMessage,
-                null
+                rejectMessage
         );
     }
 

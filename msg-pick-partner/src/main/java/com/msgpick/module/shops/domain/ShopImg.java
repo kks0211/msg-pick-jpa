@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Table(name = "shops_imgs")
@@ -17,14 +14,16 @@ import javax.persistence.Table;
 public class ShopImg extends BaseEntity {
 
     @Id
-    @Column(name = "shop_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long shopId;
 
     private String img_path;
 
     @Builder
-    public ShopImg(Long id, String img_path) {
-        this.id = id;
+    public ShopImg(Long shopId ,String img_path) {
+        this.shopId = shopId;
         this.img_path = img_path;
     }
 }
