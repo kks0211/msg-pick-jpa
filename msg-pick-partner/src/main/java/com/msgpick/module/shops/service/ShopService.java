@@ -11,6 +11,7 @@ import com.msgpick.module.shops.dto.response.ShopDetailResponse;
 import com.msgpick.module.shops.dto.response.ShopSummaryResponse;
 import com.msgpick.module.shops.repository.ShopImgRepository;
 import com.msgpick.module.shops.repository.ShopRepository;
+import com.msgpick.module.therapists.dto.TherapistDetailResponse;
 import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.module.therapists.repository.TherapistRepository;
 import com.msgpick.msgpick.global.common.exception.EntityNotFoundException;
@@ -48,7 +49,8 @@ public class ShopService {
 
         //  shop
         ShopRegisterRequest requestShop = (ShopRegisterRequest) shopSession;
-        var shopId = shopRepository.save(requestShop.toEntity(partnerId)).getId();
+        var shop = requestShop.toEntity(partnerId);
+        var shopId = shopRepository.save(shop).getId();
 
         //  shopImg
         List<MultipartFile> imgSession = (List<MultipartFile>) SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_IMG_INFO);
@@ -59,7 +61,7 @@ public class ShopService {
         //  program
         List<ProgramRegisterRequest> requestProgram = (List<ProgramRegisterRequest>) programSession;
         var ofProgram = requestProgram.stream()
-                .map(program -> program.toEntity())
+                .map(program -> program.toEntity(shop))
                 .collect(Collectors.toList());
 
         programRepository.saveAll(ofProgram);
@@ -67,7 +69,7 @@ public class ShopService {
 
         //  Therapist
         var ofTherapist = registerTherapistList.stream()
-                .map(Therapist -> Therapist.toEntity())
+                .map(Therapist -> Therapist.toEntity(shop))
                 .collect(Collectors.toList());
 
         therapistRepository.saveAll(ofTherapist);
@@ -88,7 +90,7 @@ public class ShopService {
 
             var programInfo = shop.getProgramList().stream().map(ProgramDetailResponse::toDto).collect(Collectors.toList());
 
-            var therapistInfo = shop.getTherapistList();
+            var therapistInfo = shop.getTherapistList().stream().map(TherapistDetailResponse::toDto).collect(Collectors.toList());
 
             return ShopDetailResponse.toDto(shop, programInfo, therapistInfo, shopImg);
         } else {

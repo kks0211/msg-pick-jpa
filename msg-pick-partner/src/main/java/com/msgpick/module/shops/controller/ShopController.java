@@ -77,7 +77,7 @@ public class ShopController {
             var img = (MultiValueMap<String, MultipartFile>) sessionImg;
             List<MultipartFile> multipartFileList = new ArrayList<>();
 
-             img.entrySet().stream()
+            img.entrySet().stream()
                     .filter(f -> !img.isEmpty())
                     .map(Map.Entry::getValue)
                     .collect(groupingBy(multipartFileList::addAll));
@@ -121,12 +121,12 @@ public class ShopController {
     @GetMapping
     public String shopInfoPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
         var shopInfo = shopService.findShopDetail(currentUser.id());
-        var programs = programService.findProgramList(shopInfo.getShopId());
-        var therapists = therapistService.findTherapistList(shopInfo.getShopId());
+        //var programs = programService.findProgramList(shopInfo.getShopId());
+        //var therapists = therapistService.findTherapistList(shopInfo.getShopId());
 
         model.addAttribute("shopInfo", shopInfo);
-        model.addAttribute("programs", programs);
-        model.addAttribute("therapists", therapists);
+        model.addAttribute("programs", shopInfo.getProgramList());
+        model.addAttribute("therapists", shopInfo.getTherapistList());
 
         return "shops/shop-info";
     }

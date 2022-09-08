@@ -42,10 +42,10 @@ public class ProgramController {
     @GetMapping("/modify")
     public String programModifyPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
         var shopInfo = shopService.findShopDetail(currentUser.id());
-        var programs = programService.findProgramList(shopInfo.getShopId());
+        //var programs = programService.findProgramList(shopInfo.getShopId());
 
         model.addAttribute("shopInfo", shopInfo);
-        model.addAttribute("programs", programs);
+        model.addAttribute("programs", shopInfo.getProgramList());
 
         return "programs/modify";
     }

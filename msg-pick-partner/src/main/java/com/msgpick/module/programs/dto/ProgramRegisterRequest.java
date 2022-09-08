@@ -1,6 +1,7 @@
 package com.msgpick.module.programs.dto;
 
 import com.msgpick.module.programs.domain.Program;
+import com.msgpick.module.shops.domain.Shop;
 import lombok.*;
 
 @Getter
@@ -14,8 +15,9 @@ public class ProgramRegisterRequest {
     private Long discountedPrice;
     private String description;
 
-    public Program toEntity() {
+    public Program toEntity(Shop shop) {
         return Program.builder()
+                .shop(shop)
                 .name(name)
                 .price(price)
                 .discountedPrice(discountedPrice)

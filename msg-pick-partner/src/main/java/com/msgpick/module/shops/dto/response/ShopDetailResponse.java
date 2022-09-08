@@ -1,17 +1,16 @@
 package com.msgpick.module.shops.dto.response;
 
-import com.msgpick.module.programs.domain.Program;
 import com.msgpick.module.programs.dto.ProgramDetailResponse;
 import com.msgpick.module.shops.domain.Shop;
 import com.msgpick.module.shops.domain.ShopImg;
-import com.msgpick.module.therapists.domain.Therapist;
+import com.msgpick.module.therapists.dto.TherapistDetailResponse;
 import com.msgpick.msgpick.code.*;
-import com.msgpick.msgpick.global.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,7 @@ import static java.util.stream.Collectors.joining;
 
 @Getter
 @NoArgsConstructor
-public class ShopDetailResponse extends BaseEntity {
+public class ShopDetailResponse {
     private Long shopId;
     private Long partnerId;
     private Type type;
@@ -50,9 +49,12 @@ public class ShopDetailResponse extends BaseEntity {
     private Status status;
     private String rejectMessage;
     private String imgPath;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Boolean deleted;
 
     private List<ProgramDetailResponse> programList;
-    private List<Therapist> therapistList;
+    private List<TherapistDetailResponse> therapistList;
 
     @Builder
     public ShopDetailResponse(Long shopId,
@@ -83,8 +85,11 @@ public class ShopDetailResponse extends BaseEntity {
                               Status status,
                               String rejectMessage,
                               String imgPath,
+                              LocalDateTime createdAt,
+                              LocalDateTime updatedAt,
+                              Boolean deleted,
                               List<ProgramDetailResponse> programList,
-                              List<Therapist> therapistList) {
+                              List<TherapistDetailResponse> therapistList) {
         this.shopId = shopId;
         this.partnerId = partnerId;
         this.type = type;
@@ -113,6 +118,9 @@ public class ShopDetailResponse extends BaseEntity {
         this.status = status;
         this.rejectMessage = rejectMessage;
         this.imgPath = imgPath;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deleted = deleted;
         this.programList = programList;
         this.therapistList = therapistList;
     }
@@ -135,7 +143,10 @@ public class ShopDetailResponse extends BaseEntity {
                 .collect(joining(","));
     }
 
-    public static ShopDetailResponse toDto(Shop entity, List<ProgramDetailResponse> programInfo, List<Therapist> therapistInfo, List<ShopImg> shopImgPathList) {
+    public static ShopDetailResponse toDto(Shop entity,
+                                           List<ProgramDetailResponse> programInfo,
+                                           List<TherapistDetailResponse> therapistInfo,
+                                           List<ShopImg> shopImgPathList) {
         return ShopDetailResponse.builder()
                 .shopId(entity.getId())
                 .partnerId(entity.getPartnerId())
@@ -167,6 +178,9 @@ public class ShopDetailResponse extends BaseEntity {
                 .imgPath(convertImgPath(shopImgPathList))
                 .programList(programInfo)
                 .therapistList(therapistInfo)
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .deleted(entity.getDeleted())
                 .build();
     }
 
@@ -200,6 +214,9 @@ public class ShopDetailResponse extends BaseEntity {
                 .status(entity.getStatus())
                 .rejectMessage(entity.getRejectMessage())
                 .imgPath(convertImgPath(shopImgPathList))
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .deleted(entity.getDeleted())
                 .build();
     }
 
