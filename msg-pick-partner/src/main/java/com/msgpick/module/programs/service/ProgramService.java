@@ -22,7 +22,6 @@ public class ProgramService {
         return programRepository.findByShop_Id(shopId).stream()
                 .map(ProgramDetailResponse::toDto)
                 .collect(Collectors.toList());
-        //return programMapper.findByProgramList(shopId);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -36,12 +35,6 @@ public class ProgramService {
             programRepository.save(request.toEntity());
         }
 
-
-//        if (programId == null) {
-//            return programMapper.save(program);
-//        }
-//        program.setProgramId(programId);
-//        return programMapper.update(program);
     }
 
     @Transactional(readOnly = true)
@@ -49,8 +42,6 @@ public class ProgramService {
         return programRepository.findById(programId)
                 .map(ProgramDetailResponse::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("해당 프로그램이 없습니다 : " + programId));
-
-//        return programMapper.findByProgram(programId);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -58,6 +49,6 @@ public class ProgramService {
         var entity = programRepository.findById(programId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 프로그램이 없습니다 : " + programId));
         programRepository.delete(entity);
-        //programMapper.delete(programId);
     }
+
 }

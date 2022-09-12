@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum PartnerRole {
-    OWNER("ROLE_OWNER", 1);
+    OWNER("파트너", 1);
 
     private final String description;
     private final int order;

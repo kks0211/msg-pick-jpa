@@ -37,8 +37,6 @@ public class TherapistService {
         return therapistRepository.findByShop_Id(shopId).stream()
                 .map(TherapistDetailResponse::toDto)
                 .collect(Collectors.toList());
-
-        //return therapistMapper.findByTherapistList(shopId);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -52,13 +50,6 @@ public class TherapistService {
             therapistRepository.save(request.toEntity());
         }
 
-
-//        if (therapistId == null) {
-//            return therapistMapper.save(therapist);
-//        }
-//
-//        therapist.setTherapistId(therapistId);
-//        return therapistMapper.update(therapist);
     }
 
     @Transactional(readOnly = true)
@@ -67,7 +58,6 @@ public class TherapistService {
         return therapistRepository.findById(therapistId)
                 .map(TherapistDetailResponse::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("해당 마시자사가 없습니다 : " + therapistId));
-//        return therapistMapper.findByTherapist(therapistId);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -76,6 +66,5 @@ public class TherapistService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 마시자사가 없습니다 : " + therapistId));
 
         therapistRepository.delete(entity);
-        //therapistMapper.delete(therapistId);
     }
 }

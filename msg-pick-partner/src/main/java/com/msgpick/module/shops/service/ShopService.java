@@ -79,7 +79,6 @@ public class ShopService {
     @Transactional(readOnly = true)
     public ShopDetailResponse findShopDetail(Long partnerId) {
 
-        //var shopDetail = shopMapper.findByShopDetail(partnerId);
         var shopYN = shopRepository.findByPartnerId(partnerId).isPresent();
 
         if (shopYN) {
@@ -117,15 +116,13 @@ public class ShopService {
     @Transactional(rollbackFor = Exception.class)
     public void modifyShop(Long shopId, ShopUpdateRequest request, List<MultipartFile> updateImg) {
 
-        var checkImg = shopImgRepository.findAllById(Collections.singleton(shopId));
-
-        if (checkImg.size() > 0) {
-            shopImgRepository.deleteById(shopId);
-            //shopMapper.deleteImg(shopId);
-        }
-
         if (updateImg.size() > 0) {
-            shopImg(shopId, updateImg);
+            var checkImg = shopImgRepository.findAllById(Collections.singleton(shopId));
+
+            if (checkImg.size() > 0) {
+                shopImgRepository.deleteById(shopId);
+                shopImg(shopId, updateImg);
+            }
         }
 
         var findShop = shopRepository.getReferenceById(shopId);
@@ -133,8 +130,6 @@ public class ShopService {
         if (findShop != null) {
             findShop.update(request);
         }
-
-        //return shopMapper.update(request);
     }
 
     @Transactional(readOnly = true)
@@ -149,7 +144,7 @@ public class ShopService {
 
     }
 
-    public void shopImg(Long shopId, List<MultipartFile> img) {
+    private void shopImg(Long shopId, List<MultipartFile> img) {
 
         var imgPath = FileUtil.pathCheck();
         var folder = FileUtil.folderCheck(FILE_UPLOAD_PATH, imgPath);
@@ -170,7 +165,6 @@ public class ShopService {
                                         .shopId(shopId)
                                         .img_path(imgPath + s)
                                         .build()));
-        //}).forEach(s -> shopMapper.saveImg(shopId, imgPath + s));
     }
 
 }

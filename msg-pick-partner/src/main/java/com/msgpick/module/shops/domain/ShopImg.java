@@ -22,7 +22,7 @@ public class ShopImg extends BaseEntity {
     private String img_path;
 
     @Builder
-    public ShopImg(Long shopId ,String img_path) {
+    public ShopImg(Long shopId, String img_path) {
         this.shopId = shopId;
         this.img_path = img_path;
     }
