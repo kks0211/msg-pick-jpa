@@ -106,8 +106,9 @@ public class Shop extends BaseEntity {
         return new Shop(partnerId, type, name, businessArea, howToCome, homeCareArea, zonecode, address, addressDetail, contact, theme, scale, homeCareScale, dayOff, openAt, closeAt, payment, introduce, notice, serviceTarget, etiquette, serviceTime, manner, facilities, status, rejectMessage);
     }
 
-    private static String convertFacility(List<String> request) {
+    private static String convertFacility(List<Facility> request) {
         return request.stream()
+                .map(f -> String.valueOf(f))
                 .collect(joining(","));
     }
 

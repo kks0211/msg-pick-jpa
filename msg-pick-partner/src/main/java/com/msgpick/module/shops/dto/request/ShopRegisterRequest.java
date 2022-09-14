@@ -1,17 +1,13 @@
 package com.msgpick.module.shops.dto.request;
 
-import com.msgpick.module.programs.dto.ProgramRegisterRequest;
 import com.msgpick.module.shops.domain.Shop;
-import com.msgpick.module.therapists.dto.TherapistRegisterRequest;
 import com.msgpick.msgpick.code.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
@@ -44,12 +40,13 @@ public class ShopRegisterRequest {
     private Etiquette etiquette;
     private ServiceTime serviceTime;
     private Manner manner;
-    private List<String> facilities;
+    private List<Facility> facilities;
     private Status status;
     private String rejectMessage;
 
-    private static String convertFacility(List<String> request) {
+    private static String convertFacility(List<Facility> request) {
         return request.stream()
+                .map(f -> String.valueOf(f))
                 .collect(joining(","));
     }
 

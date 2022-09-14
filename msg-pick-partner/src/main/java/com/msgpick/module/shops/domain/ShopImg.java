@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @Table(name = "shops_imgs")
@@ -13,12 +15,9 @@ import javax.persistence.*;
 @Entity
 public class ShopImg extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private Long shopId;
 
+    @Id
     private String img_path;
 
     @Builder

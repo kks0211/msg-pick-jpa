@@ -37,7 +37,7 @@ public class ShopUpdateRequest {
     private Etiquette etiquette;
     private ServiceTime serviceTime;
     private Manner manner;
-    private List<String> facilities;
+    private List<Facility> facilities;
 
 
 

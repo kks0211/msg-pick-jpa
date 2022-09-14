@@ -67,21 +67,23 @@ public class ShopController {
         }*/
 
         ShopRegisterRequest sessionShop = (ShopRegisterRequest) SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_INFO);
-        var sessionImg = SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_IMG_INFO);
+        List<MultipartFile> sessionImg = (List<MultipartFile>) SessionUtil.getAttribute(SessionUtil.REGISTER_SHOP_IMG_INFO);
 
         if (sessionShop != null) {
             model.addAttribute("sessionShop", sessionShop);
         }
 
         if (sessionImg != null) {
-            var img = (MultiValueMap<String, MultipartFile>) sessionImg;
-            List<MultipartFile> multipartFileList = new ArrayList<>();
+            // var img = (MultiValueMap<String, MultipartFile>) sessionImg;
+//            List<MultipartFile> multipartFileList = new ArrayList<>();
+//
+//            sessionImg.entrySet().stream()
+//                    .filter(f -> !sessionImg.isEmpty())
+//                    .map(Map.Entry::getValue)
+//                    .collect(groupingBy(multipartFileList::addAll));
 
-            img.entrySet().stream()
-                    .filter(f -> !img.isEmpty())
-                    .map(Map.Entry::getValue)
-                    .collect(groupingBy(multipartFileList::addAll));
-            model.addAttribute("sessionImg", multipartFileList);
+
+            model.addAttribute("sessionImg", sessionImg);
         }
 
         return "shops/register";
