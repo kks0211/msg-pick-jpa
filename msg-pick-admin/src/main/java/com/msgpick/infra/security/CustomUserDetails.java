@@ -1,8 +1,9 @@
 package com.msgpick.infra.security;
 
-import com.msgpick.module.admins.dto.AdminDetailResponse;
+import com.msgpick.module.admins.dto.AdminDto;
 import com.msgpick.msgpick.code.Role;
 import lombok.Getter;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,8 +19,8 @@ public class CustomUserDetails implements UserDetails {
     private Role role;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(AdminDetailResponse admin) {
-        this.partnerId = admin.getAdminId();
+    public CustomUserDetails(AdminDto.DetailResponse admin) {
+        this.partnerId = admin.getId();
         this.loginId = admin.getLoginId();
         this.name = admin.getName();
         this.password = admin.getPassword();

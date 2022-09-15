@@ -1,6 +1,6 @@
 package com.msgpick.module.admins.controller;
 
-import com.msgpick.module.admins.dto.AdminRegisterRequest;
+import com.msgpick.module.admins.dto.AdminDto;
 import com.msgpick.module.admins.service.AdminService;
 import com.msgpick.msgpick.global.common.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class AdminApiController {
     private final AdminService adminService;
 
     @PostMapping("/register")
-    public CommonResponse registerAdmin(@RequestBody @Valid AdminRegisterRequest request) {
+    public CommonResponse registerAdmin(@RequestBody @Valid AdminDto.RegisterRequest request) {
 
         var initAdmin = adminService.registerAdmin(request);
 

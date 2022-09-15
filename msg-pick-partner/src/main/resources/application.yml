@@ -12,8 +12,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      #location: /Users/kwanseokkim/dev/upload/tmp
-      location: C:/upload/tmp
+      location: /Users/kwanseokkim/dev/upload/tmp
+      #location: C:/upload/tmp
       file-size-threshold: 10MB
   config:
     activate:
@@ -51,8 +51,8 @@ spring:
     template-resolver-order: 0
 
 file:
-  #upload-path: /Users/kwanseokkim/dev/upload
-  upload-path: C:/upload
+  upload-path: /Users/kwanseokkim/dev/upload
+  #upload-path: C:/upload
 
 
 ---

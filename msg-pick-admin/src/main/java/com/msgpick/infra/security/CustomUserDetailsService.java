@@ -1,7 +1,7 @@
 package com.msgpick.infra.security;
 
-import com.msgpick.module.admins.dto.AdminDetailResponse;
-import com.msgpick.module.admins.mapper.AdminMapper;
+import com.msgpick.module.admins.dto.AdminDto;
+import com.msgpick.module.admins.repository.AdminRepository;
 import com.msgpick.msgpick.global.common.exception.InvalidParamException;
 import com.msgpick.msgpick.global.common.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final AdminMapper adminMapper;
+    private final AdminRepository adminRepository;
 
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
 
-        AdminDetailResponse admin = adminMapper.findByLoginId(loginId);
+        AdminDto.DetailResponse admin = adminRepository.findByLoginId(loginId);
 
         if (admin == null) {
             throw new InvalidParamException(ErrorCode.USERNAME_PASSWORD_INVALID);

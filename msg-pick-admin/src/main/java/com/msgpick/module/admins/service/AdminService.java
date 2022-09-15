@@ -1,43 +1,39 @@
 package com.msgpick.module.admins.service;
 
-import com.msgpick.module.admins.dto.AdminDetailResponse;
-import com.msgpick.module.admins.dto.AdminRegisterRequest;
-import com.msgpick.module.admins.mapper.AdminMapper;
-import com.msgpick.msgpick.global.domain.PaginationInfo;
+import com.msgpick.module.admins.dto.AdminDto;
+import com.msgpick.module.admins.repository.AdminRepository;
+import com.msgpick.msgpick.global.common.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AdminService {
 
-    private final AdminMapper adminMapper;
+    private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(rollbackFor = Exception.class)
-    public Long registerAdmin(AdminRegisterRequest request) {
-        request.encodePassword(passwordEncoder);
-        var result = adminMapper.save(request);
-        return result;
+    public Long registerAdmin(AdminDto.RegisterRequest request) {
+        var initEntity = request.toEntity();
+        initEntity.encodePassword(passwordEncoder);
+        return adminRepository.save(initEntity).getId();
     }
 
-    public AdminDetailResponse findAdmin(AdminRegisterRequest request) {
-        return adminMapper.findByLoginId(request.getName());
+    public AdminDto.DetailResponse findAdmin(Long adminId) {
+        return adminRepository.findById(adminId).map(AdminDto.DetailResponse::new)
+                .orElseThrow(() -> new EntityNotFoundException("해당 관리자가 없습니다 : " + adminId));
     }
 
-    public List<AdminDetailResponse> findAdminList(AdminDetailResponse response) {
+    public List<AdminDto.DetailResponse> findAdminList() {
 
-        var totalCount = adminMapper.getTotalCount();
-
-        PaginationInfo paginationInfo = new PaginationInfo(response);
-        paginationInfo.setTotalRecordCount(totalCount);
-
-        response.setPaginationInfo(paginationInfo);
-
-        return adminMapper.findAdminList(response);
+        return adminRepository.findAll().stream()
+                .map(AdminDto.DetailResponse::new)
+                .collect(Collectors.toList());
     }
 }
