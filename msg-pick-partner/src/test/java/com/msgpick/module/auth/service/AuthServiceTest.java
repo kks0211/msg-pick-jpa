@@ -37,6 +37,8 @@ class AuthServiceTest {
 
     @Test
     void registerPartner() {
+
+
     }
 
     @Test

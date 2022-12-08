@@ -2,6 +2,7 @@ package com.msgpick.module.partners.dto;
 
 import com.msgpick.module.partners.domain.Partner;
 import com.msgpick.msgpick.code.PartnerRole;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -45,11 +46,11 @@ public record PartnerDto(
                 .build();
     }
 
-    public Partner toEntity() {
+    public Partner toEntity(PasswordEncoder passwordEncoder) {
         return Partner.builder()
                 .email(email)
                 .phone(phone)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .build();
     }
 
