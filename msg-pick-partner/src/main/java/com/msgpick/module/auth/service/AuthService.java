@@ -5,6 +5,7 @@ import com.msgpick.module.auth.dto.AuthCheckVerifiedRequest;
 import com.msgpick.module.auth.dto.AuthVerifiedRequest;
 import com.msgpick.module.auth.repository.AuthRepository;
 import com.msgpick.module.partners.domain.Partner;
+import com.msgpick.module.partners.dto.PartnerDto;
 import com.msgpick.module.partners.dto.PartnerRegisterRequest;
 import com.msgpick.module.partners.repository.PartnerRepository;
 import com.msgpick.msgpick.global.common.exception.BaseException;
@@ -30,8 +31,7 @@ public class AuthService {
     }*/
 
     @Transactional
-    public void registerPartner(PartnerRegisterRequest request) {
-        var initDto = request.toDto();
+    public void registerPartner(PartnerDto initDto) {
         var initEntity = initDto.toEntity(passwordEncoder);
         partnerRepository.save(initEntity);
     }

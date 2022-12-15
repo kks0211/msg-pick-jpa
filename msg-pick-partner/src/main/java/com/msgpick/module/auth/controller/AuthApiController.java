@@ -31,7 +31,8 @@ public class AuthApiController {
 
     @PostMapping("/sign-up")
     public CommonResponse registerPartner(@RequestBody @Valid PartnerRegisterRequest request) {
-        authService.registerPartner(request);
+        var initDto = request.toDto();
+        authService.registerPartner(initDto);
         return CommonResponse.success(null, "파트너 등록 성공");
     }
 
