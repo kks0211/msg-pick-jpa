@@ -39,7 +39,7 @@ public class ShopController {
                                    @ModelAttribute("params") TherapistDetailResponse therapistDetailResponse) throws Exception {
         var shopInfo = shopService.findShopDetail(currentUser.id());
 
-        if (shopInfo != null && shopInfo.getStatus() == Status.REVIEW) {
+        if (shopInfo.get().getStatus() == Status.REVIEW) {
             return "redirect:/shops/register-complete";
         }
 
@@ -93,7 +93,7 @@ public class ShopController {
     public String registerCompletePage(@AuthenticationPrincipal PartnerPrincipal currentUser) {
         var shopInfo = shopService.findShopSummary(currentUser.id());
 
-        if (shopInfo != null && shopInfo.getStatus() == Status.REVIEW) {
+        if (shopInfo.get().getStatus() == Status.REVIEW) {
             return "shops/register-complete";
 
         }
@@ -126,9 +126,9 @@ public class ShopController {
         //var programs = programService.findProgramList(shopInfo.getShopId());
         //var therapists = therapistService.findTherapistList(shopInfo.getShopId());
 
-        model.addAttribute("shopInfo", shopInfo);
-        model.addAttribute("programs", shopInfo.getProgramList());
-        model.addAttribute("therapists", shopInfo.getTherapistList());
+        model.addAttribute("shopInfo", shopInfo.get());
+        model.addAttribute("programs", shopInfo.get().getProgramList());
+        model.addAttribute("therapists", shopInfo.get().getTherapistList());
 
         return "shops/shop-info";
     }

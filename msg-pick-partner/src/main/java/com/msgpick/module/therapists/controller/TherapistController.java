@@ -44,9 +44,9 @@ public class TherapistController {
     @GetMapping("/modify")
     public String modifyTherapistPage(@AuthenticationPrincipal PartnerPrincipal currentUser, Model model) {
         var shopInfo = shopService.findShopDetail(currentUser.id());
-        var therapists = therapistService.findTherapistList(shopInfo.getShopId());
+        var therapists = therapistService.findTherapistList(shopInfo.get().getShopId());
 
-        model.addAttribute("shopInfo", shopInfo);
+        model.addAttribute("shopInfo", shopInfo.get());
         model.addAttribute("therapists", therapists);
         model.addAttribute("nationalities", Nationality.values());
 

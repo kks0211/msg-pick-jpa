@@ -19,15 +19,13 @@ public class DashboardController {
 
         var shopInfo = shopService.findShopSummary(currentUser.id());
 
-        if (shopInfo == null) {
+        if (shopInfo.isEmpty()) {
             return "redirect:/shops/register";
         }
 
-        if (shopInfo != null && shopInfo.getStatus() == Status.REVIEW) {
+        if (shopInfo.get().getStatus() == Status.REVIEW) {
             return "redirect:/shops/register-complete";
-        }
-
-        if (shopInfo != null && shopInfo.getStatus() == Status.REJECT) {
+        } else if (shopInfo.get().getStatus() == Status.REJECT) {
             return "redirect:/shops/modify";
         }
 

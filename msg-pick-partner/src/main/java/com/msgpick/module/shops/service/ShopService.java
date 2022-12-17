@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -66,7 +67,6 @@ public class ShopService {
 
         programRepository.saveAll(ofProgram);
 
-
         //  Therapist
         var ofTherapist = registerTherapistList.stream()
                 .map(Therapist -> Therapist.toEntity(shop))
@@ -77,7 +77,7 @@ public class ShopService {
     }
 
     @Transactional(readOnly = true)
-    public ShopDetailResponse findShopDetail(Long partnerId) {
+    public Optional<ShopDetailResponse> findShopDetail(Long partnerId) {
 
         var shopYN = shopRepository.findByPartnerId(partnerId).isPresent();
 
@@ -91,24 +91,21 @@ public class ShopService {
 
             var therapistInfo = shop.getTherapistList().stream().map(TherapistDetailResponse::toDto).collect(Collectors.toList());
 
-            return ShopDetailResponse.toDto(shop, programInfo, therapistInfo, shopImg);
+            return Optional.of(ShopDetailResponse.toDto(shop, programInfo, therapistInfo, shopImg));
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 
     @Transactional(readOnly = true)
-    public ShopSummaryResponse findShopSummary(Long partnerId) {
-        var result = shopRepository.findByPartnerId(partnerId)
-                .map(ShopSummaryResponse::toDto)
-                .isPresent();
+    public Optional<ShopSummaryResponse> findShopSummary(Long partnerId) {
+        var result = shopRepository.findByPartnerId(partnerId).isPresent();
 
         if (!result) {
-            return null;
+            return Optional.empty();
         } else {
             return shopRepository.findByPartnerId(partnerId)
-                    .map(ShopSummaryResponse::toDto)
-                    .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + partnerId));
+                    .map(ShopSummaryResponse::toDto);
         }
 
     }
@@ -133,14 +130,14 @@ public class ShopService {
     }
 
     @Transactional(readOnly = true)
-    public ShopDetailResponse findModifyShop(Long shopId) {
+    public Optional<ShopDetailResponse> findModifyShop(Long shopId) {
 
         var shop = shopRepository.findById(shopId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 샵이 없습니다 : " + shopId));
 
         var shopImg = shopImgRepository.findAllById(Collections.singleton(shop.getId()));
 
-        return ShopDetailResponse.toDto(shop, shopImg);
+        return Optional.of(ShopDetailResponse.toDto(shop, shopImg));
 
     }
 

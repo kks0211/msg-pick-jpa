@@ -40,6 +40,7 @@ public class ShopApiController {
 
         var findModifyShop = shopService.findModifyShop(shopId);
 
+
         return CommonResponse.success(findModifyShop);
     }
 
